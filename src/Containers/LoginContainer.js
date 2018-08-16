@@ -1,0 +1,137 @@
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import {
+  Root,
+  Container,
+  Content,
+  Header,
+  Body,
+  Button,
+  Spinner,
+  Item,
+  Input,
+  Text,
+  Form,
+  Label,
+  H1,
+  Footer,
+  FooterTab,
+  View,
+  Icon,
+  Toast,
+  Title,
+  StyleProvider
+} from "native-base";
+import { emailChanged, passwordChanged, loginUser } from "../Actions";
+import styles from "../styles";
+import { style } from "expo/src/Font";
+import getTheme from "../../native-base-theme/components";
+import commonColor from "../../native-base-theme/variables/commonColor";
+import validateRules, { loginValidation } from "../Components/ValidationRules";
+import Wallpaper from "../Components/Wallpaper";
+import Logo from "../Components/Logo";
+import InputGroup from "../../native-base-theme/components/InputGroup";
+
+const message = "Welcome Back!"; 
+
+class LoginContainer extends Component {
+  onEmailChanged(text) {
+    this.props.dispatch(emailChanged(text));
+  }
+  onPasswordChanged(text) {
+    this.props.dispatch(passwordChanged(text));
+  }
+  onLoginButtonPress() {
+    this.props.navigation.navigate("home");
+    
+    // const { email, password } = this.props;
+    // // const errors = validateRules(this.props, loginValidation);
+    // // if (!errors) {
+    //   // this.props.dispatch(loginUser({ email, password }));
+    // // }
+  }
+  onRegisterButtonPress() {
+    this.props.navigation.navigate("register");
+  }
+  onForgetPasswordButtonPress() {
+    this.props.navigation.navigate("sendCode");
+  }
+
+  renderLoginButton() {
+    if (this.props.loading) {
+      return <Button full>
+        <Spinner size="large" color="#fff" />
+      </Button>;
+    }
+
+    return (
+      <Button full onPress={this.onLoginButtonPress.bind(this)} style={styles.authSubmitButton}>
+        <Text uppercase={true} >
+          Sign In
+        </Text>
+      </Button>
+    );
+  }
+
+  render() {
+    return <Container >
+            <Header style={styles.authHeader}>
+              <Body>
+                <Title uppercase={true} >LOGIN</Title>
+              </Body>
+            </Header>
+          <Wallpaper>
+            <Content padder>
+              <Logo message={message} />
+              <Form style={{ margin: 20}} >
+                  <Item >
+                    <Icon name='person' style={{marginLeft: 10}} />
+                    <Input
+                      style={{color: "#FFF"}} 
+                      placeholder="Email"
+                      keyboardType="email-address"
+                      onChangeText={this.onEmailChanged.bind(this)}
+                      value={this.props.email}
+                      disabled={this.props.loading}                      
+                      autoCorrect={false}
+                      autoCapitalize={false}
+                      autoCapitalize={'none'}
+                      returnKeyType={'done'}
+                      />
+                  </Item>
+                <Item>
+                  <Icon name='lock' style={{marginLeft: 10}} />
+                  <Input
+                    style={{color: "#FFF"}} 
+                    placeholder="Password" 
+                    onChangeText={this.onPasswordChanged.bind(this)} 
+                    value={this.props.password} 
+                    secureTextEntry 
+                    disabled={this.props.loading} 
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
+                    returnKeyType={'done'}
+                    />
+                  </Item>
+                <View>
+                  {this.renderLoginButton()}
+                </View>
+                <View style={{alignSelf: 'center'}} >
+                  <Button transparent onPress={this.onForgetPasswordButtonPress.bind(this)}>
+                    <Text uppercase={false} style={{textDecorationLine: "underline", color: "#FFF"}} >
+                      Forgot Password
+                    </Text>
+                  </Button>
+                </View>                
+              </Form>
+            </Content>
+            </Wallpaper>
+          </Container>;
+  }
+}
+
+const mapStateToProps = ({ auth }) => {
+  return auth;
+};
+
+export default connect(mapStateToProps)(LoginContainer);
