@@ -18,8 +18,6 @@ export function* loginUser(action) {
   if (response.ok) {
     // const firstUser = path(['data', 'items'], response)[0]
     const payload = response.data;
-    const { user_type } = payload.User;
-    if(user_type == 2) { //customer
       // do data conversion here if needed
       yield saveToken(payload);
       yield put({ type: CONSTANTS.LOGIN_USER_SUCCESS, payload });
@@ -32,19 +30,16 @@ export function* loginUser(action) {
           ]
         })
       );
-    } else {
-      showErrors('Invalid credentials.');
-      const payload = { errors: {login: ['Invalid credentials.']} };
-      yield put({ type: CONSTANTS.LOGIN_USER_FAIL, payload });  
-    }
   } else {
-    const payload = showErrorsAndReturnPayload(response);
+    // const payload = showErrorsAndReturnPayload(response);
+    const payload = response.data;
+    alert(payload.message);
     yield put({ type: CONSTANTS.LOGIN_USER_FAIL, payload });
   }
 }
 
 async function saveToken(payload){
-  await AsyncStorage.setItem(CONSTANTS.STORAGE_KEY, payload.token);
+  await AsyncStorage.setItem(CONSTANTS.STORAGE_KEY, payload.access_token);
 }
 
 async function getData(){
@@ -117,15 +112,20 @@ export function* resendVerificationCode(action) {
 
 // Send Password Reset Code
 export function* sendPasswordResetCode(action) {
-  action.payload.email =  action.payload.phone;
+  
   const response = yield call(api.sendPasswordResetCode, action.payload);
+
+  const payload = response.data;
+  const {error, message} = payload;
+
   if (response.ok) {
-    const payload = response.data;
+    alert(message || error);
     // do data conversion here if needed
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_SUCCESS, payload });
-    yield put(NavigationActions.navigate({ routeName: 'resetPassword' }));
+    yield put(NavigationActions.navigate({ routeName: 'login' }));
   } else {
-    const payload = showErrorsAndReturnPayload(response);
+    alert(message || error);
+    // const payload = showErrorsAndReturnPayload(response);
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_FAIL, payload });
   }
 }

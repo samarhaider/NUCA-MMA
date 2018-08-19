@@ -1,11 +1,12 @@
 import * as CONSTANTS from '../Constants';
 
 const roundData = {
-  player1: {},
-  player2: {},
+  // 1: {},
+  // 2: {},
 };
 const INITIAL_STATE = {
-  rounds: [roundData],
+  // rounds: [roundData],
+  rounds: [],
   roundsLimit: 5,
   error: '',
   loading: false
@@ -14,12 +15,24 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
     case CONSTANTS.ROUND_ADD:
-      return {...state, rounds: [ ...state.rounds, roundData ]};
+      // return {...state, rounds: [ ...state.rounds, roundData ]};
+      return {...state, rounds: [ ...state.rounds, action.payload ]};
+    // case CONSTANTS.MATCH_DETAIL_SUCCESS:
+    //   // roundData = [];
+    //   roundData[action.payload.athlete_one_data.user_id] =  {};
+    //   roundData[action.payload.athlete_two_data.user_id] =  {};
+    //   return {...state};
     case CONSTANTS.ROUND_REMOVE:
       const rounds = state.rounds;
       rounds.splice(action.payload, 1);
       // let rounds = state.rounds.filter(item => item !== action.payload)
       return {...state, rounds };
+    case CONSTANTS.RESULT_CHANGED:
+      const {payload} = action;
+      // console.tron.log(state);
+      const rounds2 = state.rounds;
+      rounds2[payload.index][payload.player_id][payload.field] = payload.text;
+      return {...state, rounds: rounds2 };
     default:
       return state;
   }

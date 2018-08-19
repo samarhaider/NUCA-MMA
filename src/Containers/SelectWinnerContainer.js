@@ -24,10 +24,14 @@ import {
   FooterTab,
   View,
   Thumbnail,
+  Spinner,
 } from "native-base";
 import {
   winnerImageAdd,
   winnerImageRemove,
+  onWinnerChanged,
+  onWinnerTypeChanged,
+  saveMatch,
 } from '../Actions';
 import styles from "../styles";
 import MatchCardComponent from '../Components/MatchCardComponent'
@@ -36,6 +40,14 @@ var BUTTONS = ["From Camera", "From	Gallery", "Cancel"];
 var CANCEL_INDEX = 2;
 
 class SelectWinnerContainer extends Component {
+
+  onWinnerChangedValue = payload => {
+    this.props.dispatch(onWinnerChanged(payload));
+  }
+   
+  onWinnerTypeChangedValue = payload => {
+    this.props.dispatch(onWinnerTypeChanged(payload));
+  }
 
   _pickImage = async buttonIndex => {
 
@@ -71,6 +83,15 @@ class SelectWinnerContainer extends Component {
     this.props.dispatch(winnerImageRemove(index));
   }
 
+  submitResultPress = () => {
+    const { resultRounds, selectWinner, matchDetail } = this.props;
+    const { rounds } = resultRounds;
+    const result = {
+      rounds, ...selectWinner, id: matchDetail.id,
+    }    
+    this.props.dispatch(saveMatch(result));
+  }
+
   renderHeader() {
     return <Header>
     <Button transparent onPress={() => this.props.navigation.goBack()}>
@@ -94,7 +115,7 @@ class SelectWinnerContainer extends Component {
   </Header>;
   }
 
-  renderResult() {
+  renderResult(matchDetail) {
     return <Card>
             <CardItem header>
               <Left>
@@ -109,12 +130,11 @@ class SelectWinnerContainer extends Component {
                     <Picker 
                       placeholder="Select a Winner"
                       header="Select a Winner" mode="dropdown" 
-                      selectedValue1={this.props.winner_id}
+                      selectedValue={this.props.selectWinner.winner}
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
-                      // onValueChange={this.onCityNameChanged.bind(this)}
-                      disabled={this.props.loading}>
-                      <Picker.Item label="Player One" value={1} />
-                      <Picker.Item label="Player Two" value={2} />
+                      onValueChange={this.onWinnerChangedValue.bind(this)}>
+                      <Picker.Item label={matchDetail.athlete_one_data.name} value={matchDetail.athlete_one_data.user_id} />
+                      <Picker.Item label={matchDetail.athlete_two_data.name} value={matchDetail.athlete_two_data.user_id} />
                     </Picker>
                   </Item>
                 </Col>
@@ -123,13 +143,12 @@ class SelectWinnerContainer extends Component {
                 <Col>
                   <Item>
                     <Picker placeholder="Win Type" header="Select Win Type" mode="dropdown" 
-                      selectedValue1={this.props.win_type}
+                      selectedValue={this.props.selectWinner.win_type}
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
-                      // onValueChange={this.onCityNameChanged.bind(this)}
-                      disabled={this.props.loading}>
-                      <Picker.Item label="KO" value="KO" />
-                      <Picker.Item label="Decision" value="Decision" />
-                      <Picker.Item label="Draw" value="Draw" />
+                      onValueChange={this.onWinnerTypeChangedValue.bind(this)}>
+                      <Picker.Item label="KO" value="ko/tko" />
+                      <Picker.Item label="Decision" value="dec" />
+                      <Picker.Item label="Draw" value="draw" />
                     </Picker>
                   </Item>
                 </Col>
@@ -173,14 +192,26 @@ class SelectWinnerContainer extends Component {
           </Card>;
   }
 
+  renderSubmitButton() {
+    if (this.props.selectWinner.loading) {
+      return <Button primary full>
+        <Spinner size="large" color="#fff" />
+      </Button>;
+    }
+
+    return (
+      <Button primary full onPress={() => this.submitResultPress()}>
+        <Text uppercase={true} style={styles.fooButtonText}>Submit</Text>
+      </Button>
+    );
+  }
+
   renderFooter() {
     return <Footer>
       <FooterTab>
         <Row>
           <Col>
-          <Button primary full>
-            <Text uppercase={true} style={styles.fooButtonText}>Submit</Text>
-          </Button>
+            {this.renderSubmitButton()}
           </Col>
         </Row>
       </FooterTab>
@@ -188,11 +219,12 @@ class SelectWinnerContainer extends Component {
   }
 
   render() {
+    const { matchDetail } = this.props;
     return <Container>
           {this.renderHeader()}
           <Content>
-            <MatchCardComponent />
-            {this.renderResult()}
+            <MatchCardComponent data={{...matchDetail}} />
+            {this.renderResult(matchDetail)}
             {this.renderAttachments()}
             {this.renderFooter()}
           </Content>
@@ -200,8 +232,8 @@ class SelectWinnerContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ selectWinner }) => {
-  return {selectWinner};
+const mapStateToProps = ({ selectWinner, matchDetail, resultRounds }) => {
+  return { selectWinner, matchDetail, resultRounds };
 };
 
 export default connect(mapStateToProps)(SelectWinnerContainer);

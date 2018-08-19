@@ -2,36 +2,29 @@ import { NavigationActions } from 'react-navigation';
 import * as CONSTANTS from '../Constants';
 
 const INITIAL_STATE = {
-  phone: null,
-  username: null,
-  password: null,
+  grant_type: 'password',
+  client_id: 2,
+  client_secret: 'rLZHSvoujOhm1OQiDJiInnsP25YXlrYoKJJJ9nve',
+  username: "",
+  // password: "dummy",
+  // email: "eino41@example.net",
+  password: "",
+  email: "",
   // user: null,
-  profile: null,
   token: null,
   error: '',
-  city_id: 1,
   loading: false,
   updateProfile:null
 };
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    case CONSTANTS.PHONE_CHANGED:
-      return { ...state, phone: action.payload };
     case CONSTANTS.USERNAME_CHANGED:
       return { ...state, username: action.payload };
     case CONSTANTS.EMAIL_CHANGED:
       return { ...state, email: action.payload };
     case CONSTANTS.PASSWORD_CHANGED:
       return { ...state, password: action.payload };
-    case CONSTANTS.CONFIRM_PASSWORD_CHANGED:
-      return { ...state, password_confirmation: action.payload };
-    case CONSTANTS.FIRST_NAME_CHANGED:
-      return { ...state, firstname: action.payload };
-    case CONSTANTS.LAST_NAME_CHANGED:
-      return { ...state, lastname: action.payload };
-    case CONSTANTS.CITY_NAME_CHANGED:
-      return { ...state, city_id: action.payload };
     case CONSTANTS.PASSWORD_RESET_CODE_CHANGED:
       return { ...state, code: action.payload };
     case CONSTANTS.LOGIN_USER:

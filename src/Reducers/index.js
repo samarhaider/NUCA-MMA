@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import NavigationReducer from  './NavigationReducer';
 import AuthReducer from './AuthReducer';
 import MatchReducer from "./MatchReducer";
-import MatchDetailReducer from "./PostDetailReducer";
+import MatchDetailReducer from "./MatchDetailReducer";
 import ResultRoundsReducer from "./ResultRoundsReducer";
 import SelectWinnerReducer from "./SelectWinnerReducer";
 

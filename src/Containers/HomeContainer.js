@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import { TouchableOpacity } from "react-native";
 import {
   Container,
   Header,
@@ -14,30 +13,28 @@ import {
   Icon,
 } from "native-base";
 
-import styles from "../styles";
-// import {  } from "../Actions";
+import { getMatches, getMatchDetail, logoutUser } from "../Actions";
 import * as CONSTANTS from "../Constants";
 import getTheme from "../../native-base-theme/components";
 import commonColor from "../../native-base-theme/variables/commonColor";
 import LoadingComponent from "../Components/LoadingComponent";
 import NoRecordFoundComponent from "../Components/NoRecordFoundComponent";
 import MatchCardComponent from '../Components/MatchCardComponent'
-import RoundComponent from '../Components/RoundComponent'
 
 class HomeContainer extends Component {
 
   componentDidMount() {
-    // this.props.dispatch(inProgressLoad({}));
+    this.props.dispatch(getMatches({}));
   }
   
   onLogoutButtonPress = () => {
-    alert('Do you want to logout?')
-    this.props.navigation.navigate("login");
-    // this.props.dispatch(logout());
+    // alert('Do you want to logout?')
+    this.props.dispatch(logoutUser());
   }
 
   onMatchClick = (match) => {
-    this.props.navigation.navigate("resultAdd", match)
+    this.props.dispatch({type: CONSTANTS.MATCH_DETAIL_SUCCESS, payload: match});
+    this.props.navigation.navigate("resultAdd", {match})
   }
   
   renderHeader() {
@@ -57,19 +54,19 @@ class HomeContainer extends Component {
 
   renderListItem = (match) => {
     return <ListItem transparent onPress={() => this.onMatchClick(match)}>
-              <MatchCardComponent data={match} />
+              <MatchCardComponent data={{...match}} />
           </ListItem>;
   }
 
   renderList() {
-    const { matchList } = this.props;
-    if(matchList.loading) {
+    const { loading, data } = this.props;
+    if(loading) {
       return <LoadingComponent />
     }
-    // if(matchList.data.length == 0) {
-    //   return  <NoRecordFoundComponent />
-    // }
-    return <List dataArray={matchList.data}
+    if(data.length == 0) {
+      return  <NoRecordFoundComponent />
+    }
+    return <List dataArray={data}
                  renderRow={(match) => this.renderListItem(match)}>
       </List>;
   }
@@ -86,8 +83,8 @@ class HomeContainer extends Component {
   }
 }
 
-const mapStateToProps = ({ matchList, auth }) => {
-  return { matchList, auth };
+const mapStateToProps = ({ matchList }) => {
+  return matchList;
 };
 
 export default connect(mapStateToProps)(HomeContainer);

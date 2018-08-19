@@ -29,28 +29,42 @@ import * as CONSTANTS from '../Constants';
 import MatchCardComponent from '../Components/MatchCardComponent'
 import RoundComponent from '../Components/RoundComponent'
 
-class ResultAddContainer extends Component {  
+const resultObj = {
+  control: '',
+  knock_downs: '',
+  total_strike: '',
+  significant_strike: '',
+  take_downs: '',
+  sub_attempts: '',
+}
+class ResultAddContainer extends Component {
+
+  componentDidMount() {
+    this.addRoundWithUserId();
+  }
+
+  addRoundWithUserId = () => {
+    const { matchDetail } = this.props;
+    let roundData = {};
+    roundData[matchDetail.athlete_one_data.user_id] =  resultObj;
+    roundData[matchDetail.athlete_two_data.user_id] =  resultObj;
+    console.tron.log(roundData)
+    this.props.dispatch(addRound(roundData));
+  }
 
   _onFinishPress = () => {
-    // const {
-    //   phone, type, image
-    // } =  this.props.favourDetail;
-    // this.props.dispatch(saveFavour(this.props.favourDetail));
-    this.props.navigation.navigate("selectWinner");
+    const { match } = this.props.navigation.state.params;
+    this.props.navigation.navigate("selectWinner", {match});
   }
 
   onPressAddRound = () => {
     const { resultRounds } = this.props;
     const {roundsLimit, rounds} = resultRounds;
     if (rounds.length < roundsLimit) {
-      this.props.dispatch(addRound());
+        this.addRoundWithUserId();
     } else {
       alert(`You cannot add more than ${roundsLimit} rounds`);
     }
-  }
-
-  onPressRemoveRound = () => {
-    alert('Remove round');
   }
 
   renderHeader() {
@@ -88,11 +102,12 @@ class ResultAddContainer extends Component {
 
   render() {
     const { resultRounds } = this.props;
-    // console.log(resultRounds)
+    const { match } = this.props.navigation.state.params;
+    console.tron.log(resultRounds.rounds)
     return <Container>
             {this.renderHeader()}
             <Content>
-              <MatchCardComponent />
+              <MatchCardComponent data={{...match}} />
               {resultRounds.rounds.map((data,i) => {
                 return <RoundComponent key={i} index={i} data={data} />
               })}

@@ -10,43 +10,42 @@ import { showErrorsAndReturnPayload } from '../Components/ValidationRules';
 // to the sagas which need it.
 const api = API.create();
 
-export function* postList(action) {
-   const response = yield call(api.getPostsList, action.payload);
+export function* matchList(action) {
+   const response = yield call(api.getMatchesList, action.payload);
 
   if (response.ok) {
     const payload = response.data;
     // do data conversion here if needed
-    yield put({ type: CONSTANTS.POST_LIST_FETCH_SUCCESS, payload });
+    yield put({ type: CONSTANTS.MATCH_LIST_FETCH_SUCCESS, payload });
   } else {
     const payload = showErrorsAndReturnPayload(response);
-    yield put({ type: CONSTANTS.POST_LIST_FETCH_FAIL, payload });
+    yield put({ type: CONSTANTS.MATCH_LIST_FETCH_FAIL, payload });
   }
 }
 
-export function* postDetail(action) {
+export function* matchDetail(action) {
   const response = yield call(api.getPostDetail, action.payload);
 
  if (response.ok) {
    const payload = response.data;
    // do data conversion here if needed
-   yield put({ type: CONSTANTS.POST_DETAIL_SUCCESS, payload });
+   yield put({ type: CONSTANTS.MATCH_DETAIL_SUCCESS, payload });
  } else {
    const payload = showErrorsAndReturnPayload(response);
-   yield put({ type: CONSTANTS.POST_DETAIL_FAIL, payload });
+   yield put({ type: CONSTANTS.MATCH_DETAIL_FAIL, payload });
  }
 }
 
-export function* postSave(action) {
-   const response = yield call(api.savePost, action.payload);
+export function* matchSave(action) {
+   const response = yield call(api.saveMatch, action.payload);
   if (response.ok) {
     const payload = response.data;
     // do data conversion here if needed
-    yield put({ type: CONSTANTS.POST_SAVE_SUCCESS, payload });
-    // yield put(NavigationActions.navigate({ routeName: 'fovorAddedByMe' }));
+    yield put({ type: CONSTANTS.MATCH_SAVE_SUCCESS, payload });
     yield put(NavigationActions.navigate({ routeName: 'home' }));
   } else {
     const payload = showErrorsAndReturnPayload(response);
-    yield put({ type: CONSTANTS.POST_SAVE_FAIL, payload });
+    yield put({ type: CONSTANTS.MATCH_SAVE_FAIL, payload });
   }
 }
 
@@ -63,29 +62,5 @@ export function* postUpdate(action) {
   }
 }
 
-export function* inProgressLoad(action) {
-  const response = yield call(api.inProgressLoad, action.payload);
 
- if (response.ok) {
-   const payload = response.data;
-   // do data conversion here if needed
-   yield put({ type: CONSTANTS.IN_PROGRESS_LOAD_FETCH_SUCCESS, payload });
- } else {
-   const payload = showErrorsAndReturnPayload(response);
-   yield put({ type: CONSTANTS.IN_PROGRESS_LOAD_FETCH_FAIL, payload });
- }
-}
-
-export function* trackingLocationSave(action) {
-  const response = yield call(api.trackingLocationLoadSave, action.payload);
-
- if (response.ok) {
-   const payload = response.data;
-   // do data conversion here if needed
-   yield put({ type: CONSTANTS.TRACKING_LOCATION_SAVE_SUCCESS, payload });
- } else {
-   const payload = showErrorsAndReturnPayload(response);
-   yield put({ type: CONSTANTS.TRACKING_LOCATION_SAVE_FAIL, payload });
- }
-}
 

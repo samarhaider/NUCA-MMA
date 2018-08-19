@@ -1,5 +1,5 @@
 // export const API_BASE_URL = 'http://localhost/strictlyair-web/api';
-export const API_BASE_URL = 'https://www.strictlyairandcargo.com/api';
+export const API_BASE_URL = 'http://devport.nucamma.com/';
 // Get Data from local storage
 export const FETCH_DATA_FROM_STORAGE = "FETCH_DATA_FROM_STORAGE";
 export const FETCH_DATA_FROM_STORAGE_SUCCESS = "FETCH_DATA_FROM_STORAGE_SUCCESS";
@@ -67,6 +67,7 @@ export const MATCH_RATING_CHANGED = "MATCH_RATING_CHANGED";
 
 export const ROUND_ADD = "ROUND_ADD";
 export const ROUND_REMOVE = "ROUND_REMOVE";
+export const RESULT_CHANGED = "RESULT_CHANGED";
 
 export const MATCH_DETAIL = "MATCH_DETAIL";
 export const MATCH_DETAIL_SUCCESS = "MATCH_DETAIL_SUCCESS";
@@ -99,6 +100,9 @@ export const SHIPMENT_LIST_FETCH_FAIL = "SHIPMENT_LIST_FETCH_FAIL";
 
 export const WINNER_IMAGES_ADD = "WINNER_IMAGES_ADD";
 export const WINNER_IMAGES_REMOVE = "WINNER_IMAGES_REMOVE";
+
+export const WINNER_CHANGED = "WINNER_CHANGED";
+export const WIN_TYPE_CHANGED = "WIN_TYPE_CHANGED";
 
 // General Constants
 export const MATCH_STATUS_PENDING = 1;

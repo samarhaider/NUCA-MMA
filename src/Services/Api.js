@@ -61,38 +61,49 @@ import { store } from '../../App';
     const setToken = (token) => {
       token = token      
     };
-    const loginUser = (data = {}) => api.post("users/login", {User: data});
+    const loginUser = (data = {}) => api.post("oauth/token", data);
     const registerUser = (data = {}) => api.post("users/register", data);
     const verifyUser = (data = {}) => api.post("users/verify", data);
     const resendVerificationCode = (data = {}) => api.post("users/resend-code", data);
-    const sendPasswordResetCode = (data = {}) => api.post("users/send-password-reset-code", data);
+    const sendPasswordResetCode = (data = {}) => api.post("/api/account/forgot", data);
     const resetPassword = (data = {}) => api.post("users/reset-password", data);
     // Posts
-    const getPostsList = (QueryString = {}) => {
+    const getMatchesList = (QueryString = {}) => {
       return getToken().then(token => {
         api.setHeader('Authorization', `Bearer ${token}` )
-        return api.get("operators/viewLoadPosts.json", QueryString)
+        return api.get("api/matches", QueryString)
       })
     };
     const getPostDetail = (QueryString = {}) => api.get(`favors/${QueryString.id}`, QueryString);
-    const savePost = (data = {}) => {
-      // let form_data = new FormData();
-      // for ( var key in data ) {
-      //     form_data.append(key, data[key]);
-      // }
-      // if(data.image) {
-      //   form_data.append('image', {
-      //     uri: data.image,
-      //     type: 'image/jpeg',
-      //     name: 'testPhotoName'
-      //   });
-      // }
-      // const headers = {
-      //   'content-type': 'multipart/form-data',
-      // }
-      return api.post(`favors`, data, {headers})
+    const saveMatch = (data = {}) => {
+      console.tron.log(data)
+      let form_data = new FormData();
+      form_data.append('_method', 'put');      
+      for ( let key in data ) {
+          if (key == 'rounds' ) {
+            for ( let index in data['rounds'] ) {
+              const intIndex = parseInt(index);
+              form_data.append('rounds[]', data['rounds'][intIndex]);
+            }
+          } else {
+            form_data.append(key, data[key]);
+          }
+      }
+      const { images } = data;
+      for ( let index in images ) {
+        form_data.append('images[]', {
+          uri: images[index].uri,
+          type: 'image/jpeg',
+          name: `result_img_${index}`,
+        });
+      }
+      const headers = {
+        'content-type': 'multipart/form-data',
+      }
+      console.log(form_data)
+      return api.post(`api/match/${data.id}`, form_data, {headers})
     };
-    const updatePost = (data = {}) => api.put(`favors/${data.id}`, data, {
+    const updateMatch = (data = {}) => api.put(`favors/${data.id}`, data, {
         // headers: getHeaders()
       });
     const inProgressLoad = (QueryString = {}) => {
@@ -141,8 +152,7 @@ import { store } from '../../App';
     //
     return { // a list of the API functions from step 2
       setToken, loginUser, registerUser, verifyUser, resendVerificationCode, sendPasswordResetCode, 
-      resetPassword, getPostsList, updatePost, getUserProfile, updateProfile, updateAvatar, getPostDetail, savePost,
-      inProgressLoad, trackingLocationLoadSave,
+      resetPassword, getMatchesList, updateMatch, getUserProfile, updateProfile, updateAvatar, getPostDetail, saveMatch,      
       getShipmentsList, getShipmentDetail };
   };
 // let's return back our create method as the default.

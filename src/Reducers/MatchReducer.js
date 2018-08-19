@@ -1,7 +1,7 @@
 import * as CONSTANTS from '../Constants';
 
 const INITIAL_STATE = {  
-  data:[1, 2, 3,4,5],
+  data: [],
   error: '',
   loading: false
 };

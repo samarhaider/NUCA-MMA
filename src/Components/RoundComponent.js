@@ -17,6 +17,7 @@ import {
 } from "native-base";
 import {
   removeRound,
+  resultChanged,
 } from "../Actions";
 
 import styles from "../styles";
@@ -34,9 +35,17 @@ class RoundComponent extends Component {
     }
   }
 
+  onRoundUpdate (text, index, player_id, field) {
+    const payload = {
+      text, index, player_id, field,
+    };
+    this.props.dispatch(resultChanged(payload));
+  }
+
   render() {
-    const {index} = this.props;
-    
+    const { index, matchDetail, resultRounds} = this.props;
+    const { rounds } = resultRounds;    
+
     return <Card>
     <CardItem header bordered>
       <Left>
@@ -50,7 +59,7 @@ class RoundComponent extends Component {
       <Body>
         <Row style={style.player}>
           <Col>
-            <Text>Player one</Text>
+            <Text>{matchDetail.athlete_one_data.name}</Text>
           </Col>
         </Row>
         <Row>
@@ -58,18 +67,18 @@ class RoundComponent extends Component {
             <Item style={style.rightItem} >
               <Input
                 placeholder="Control" 
-                // onChangeText={this.onPasswordChanged.bind(this)} 
-                // value={this.props.control} 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'control')} 
+                value={rounds[index][matchDetail.athlete_one_data.user_id]['control']} 
                 />
             </Item>
           </Col>
           <Col>
             <Item style={style.leftItem}>
               <Input
-                  placeholder="Knockdowns" 
-                  // onChangeText={this.onPasswordChanged.bind(this)} 
-                  // value={this.props.knockdowns} 
-                  />
+                placeholder="Knockdowns" 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'knock_downs')} 
+                value={rounds[index][matchDetail.athlete_one_data.user_id]['knock_downs']} 
+                />
             </Item>
           </Col>
         </Row>
@@ -78,7 +87,8 @@ class RoundComponent extends Component {
             <Item style={style.rightItem}>
               <Input
                 placeholder="Total Strike" 
-                // onChangeText={this.onPasswordChanged.bind(this)} 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'total_strike')} 
+                value={rounds[index][matchDetail.athlete_one_data.user_id]['total_strike']} 
                 // value={this.props.total_strike} 
                 />
             </Item>
@@ -86,8 +96,9 @@ class RoundComponent extends Component {
           <Col>
             <Item style={style.leftItem}>
               <Input
-                  placeholder="Significant Strike" 
-                  // onChangeText={this.onPasswordChanged.bind(this)} 
+                placeholder="Significant Strike" 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'significant_strike')} 
+                value={rounds[index][matchDetail.athlete_one_data.user_id]['significant_strike']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -98,16 +109,18 @@ class RoundComponent extends Component {
             <Item style={style.rightItem}>
               <Input
                 placeholder="Take Downs" 
-                // onChangeText={this.onPasswordChanged.bind(this)} 
-                // value={this.props.total_strike} 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'take_downs')} 
+                value={rounds[index][matchDetail.athlete_one_data.user_id]['take_downs']} 
+                // value={this.props.take_downs} 
                 />
             </Item>
           </Col>
           <Col>
             <Item style={style.leftItem}>
               <Input
-                  placeholder="Sub Attempts" 
-                  // onChangeText={this.onPasswordChanged.bind(this)} 
+                placeholder="Sub Attempts" 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'sub_attempts')} 
+                value={rounds[index][matchDetail.athlete_one_data.user_id]['sub_attempts']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -117,29 +130,29 @@ class RoundComponent extends Component {
     </CardItem>
     <View style={styles.horizontalLine} />
     <CardItem>
-      <Body>
+    <Body>
         <Row style={style.player}>
           <Col>
-            <Text>Player Two</Text>
+            <Text>{matchDetail.athlete_two_data.name}</Text>
           </Col>
         </Row>
         <Row>
           <Col>
-            <Item style={style.rightItem}>
+            <Item style={style.rightItem} >
               <Input
                 placeholder="Control" 
-                // onChangeText={this.onPasswordChanged.bind(this)} 
-                // value={this.props.control} 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'control')} 
+                value={rounds[index][matchDetail.athlete_two_data.user_id]['control']} 
                 />
             </Item>
           </Col>
           <Col>
             <Item style={style.leftItem}>
               <Input
-                  placeholder="Knockdowns" 
-                  // onChangeText={this.onPasswordChanged.bind(this)} 
-                  // value={this.props.knockdowns} 
-                  />
+                placeholder="Knockdowns" 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'knock_downs')} 
+                value={rounds[index][matchDetail.athlete_two_data.user_id]['knock_downs']} 
+                />
             </Item>
           </Col>
         </Row>
@@ -148,7 +161,8 @@ class RoundComponent extends Component {
             <Item style={style.rightItem}>
               <Input
                 placeholder="Total Strike" 
-                // onChangeText={this.onPasswordChanged.bind(this)} 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'total_strike')} 
+                value={rounds[index][matchDetail.athlete_two_data.user_id]['total_strike']} 
                 // value={this.props.total_strike} 
                 />
             </Item>
@@ -156,8 +170,9 @@ class RoundComponent extends Component {
           <Col>
             <Item style={style.leftItem}>
               <Input
-                  placeholder="Significant Strike" 
-                  // onChangeText={this.onPasswordChanged.bind(this)} 
+                placeholder="Significant Strike" 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'significant_strike')} 
+                value={rounds[index][matchDetail.athlete_two_data.user_id]['significant_strike']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -168,16 +183,18 @@ class RoundComponent extends Component {
             <Item style={style.rightItem}>
               <Input
                 placeholder="Take Downs" 
-                // onChangeText={this.onPasswordChanged.bind(this)} 
-                // value={this.props.total_strike} 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'take_downs')} 
+                value={rounds[index][matchDetail.athlete_two_data.user_id]['take_downs']} 
+                // value={this.props.take_downs} 
                 />
             </Item>
           </Col>
           <Col>
             <Item style={style.leftItem}>
               <Input
-                  placeholder="Sub Attempts" 
-                  // onChangeText={this.onPasswordChanged.bind(this)} 
+                placeholder="Sub Attempts" 
+                onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'sub_attempts')} 
+                value={rounds[index][matchDetail.athlete_two_data.user_id]['sub_attempts']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -199,8 +216,8 @@ const style = {
 //   return state.auth;
 // };
 // OR better is below, equal to above
-const mapStateToProps = ({ resultRounds, auth }) => {
-  return {resultRounds, auth};
+const mapStateToProps = ({ resultRounds, matchDetail }) => {
+  return {resultRounds, matchDetail};
 };
 
 export default connect(mapStateToProps)(RoundComponent);

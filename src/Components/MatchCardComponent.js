@@ -10,34 +10,41 @@ import {
   Col,
   Thumbnail,  
 } from "native-base";
-import getTheme from "../../native-base-theme/components";
-import commonColor from "../../native-base-theme/variables/commonColor";
-const uri = "https://lh3.googleusercontent.com/--ToX-7uzoRY/AAAAAAAAAAI/AAAAAAAAAAA/APUIFaMid6l1t5Bl2ItSCzDcqx5PtotgWg/mo/photo.jpg?sz=46";
+import moment from 'moment/src/moment';
+import styles from '../styles';
+const uri = "https://komarketing.com/images/2014/08/linkedin-default.png";
 
 class MatchCardComponent extends Component {
 
+  getDayName(date) {
+    return moment(date, 'YYYY-MM-DD').format('dddd');    
+  }
+
   render() {
+    const { data } =  this.props;
+    const profile_picture1 = data.athlete_one_data.profile_picture || uri;
+    const profile_picture2 = data.athlete_two_data.profile_picture || uri;
     return <Card>
     <CardItem header bordered>
       <Body>
-        <Text>Monday</Text>
-        <Text note>Mar 5, 2018, 08:00 PM</Text>
+        <Text>{this.getDayName(data.schedule.start_time)}</Text>
+        <Text note>{data.schedule.start_time}</Text>
       </Body>
     </CardItem>
     <CardItem>
       <Row>
         <Col size={40} style={style.player}  >
-          <Thumbnail large source={{uri: uri}} style={style.thumbnail} />
-          <Text>Player One</Text>
-          <Text note>City/Town</Text>
+          <Thumbnail large source={{uri: profile_picture1}} style={style.thumbnail} />
+          <Text>{data.athlete_one_data.name}</Text>
+          <Text note>{data.athlete_one_data.address}</Text>
         </Col>
         <Col size={20} style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }} >
-          <Text style={{color: "#CECECE", fontSize: 25, fontWeight:"800"}} >VS</Text>
+          <Text style={styles.vs} >VS</Text>
         </Col>
         <Col size={40} style={style.player} >
-          <Thumbnail large source={{uri: uri}} style={style.thumbnail} />
-          <Text>Player Two</Text>
-          <Text note>City/Town</Text>
+          <Thumbnail large source={{uri: profile_picture2}} style={style.thumbnail} />
+          <Text>{data.athlete_two_data.name}</Text>
+          <Text note>{data.athlete_two_data.address}</Text>
         </Col>
       </Row>
     </CardItem>            

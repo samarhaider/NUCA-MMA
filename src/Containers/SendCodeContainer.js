@@ -37,12 +37,12 @@ const message = "Sed ut perspiciatis unde omnis iste natus error sit ptatem";
 
 class SendCodeContainer extends Component {
   onSubmitButtonPress = () => {
-    const errors = validateRules(this.props, sendCodeValidation);
-    if (!errors) {
+    // const errors = validateRules(this.props, sendCodeValidation);
+    // if (!errors) {
       const { email } = this.props;
-      // this.props.dispatch(sendPasswordResetCode({ email }));
-      this.props.navigation.navigate("login");
-    }
+      this.props.dispatch(sendPasswordResetCode({ email }));
+      // this.props.navigation.navigate("login");
+    // }
   }
   onemailChanged = (text) => {
     this.props.dispatch(emailChanged(text));

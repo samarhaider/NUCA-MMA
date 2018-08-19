@@ -13,6 +13,7 @@ const styles = {
   fooButtonText: {fontSize: 20, color: '#fff'},
   authHeader: { backgroundColor: "#020203", alignItems: "center" },
   authSubmitButton: { borderRadius: 5},
+  vs: {color: "#CECECE", fontSize: 25, fontWeight:"800"},
   timerRow: {
     marginTop: -12,
     marginLeft: -16,

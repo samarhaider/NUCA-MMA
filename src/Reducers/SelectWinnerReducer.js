@@ -2,7 +2,9 @@ import * as CONSTANTS from "../Constants";
 
 const INITIAL_STATE = {
   error: "",
-  loading: true,
+  loading: false,
+  // winner: 1,
+  // win_type: 'dec',
   images: [
     // {
     //   "cancelled": false,
@@ -23,6 +25,10 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.WINNER_CHANGED:
+      return {...state, winner: action.payload};
+    case CONSTANTS.WIN_TYPE_CHANGED:
+      return {...state, win_type: action.payload};
     case CONSTANTS.WINNER_IMAGES_ADD:
       return {...state, images: [ ...state.images, action.payload ]};
     case CONSTANTS.WINNER_IMAGES_REMOVE:
@@ -30,6 +36,12 @@ export default (state = INITIAL_STATE, action) => {
       images.splice(action.payload, 1);
       // let images = state.images.filter(item => item !== action.payload)
       return {...state, images };
+    case CONSTANTS.MATCH_SAVE:
+      return {...state, loading: true};
+    case CONSTANTS.MATCH_SAVE_SUCCESS:
+      return {...state, loading: false};
+    case CONSTANTS.MATCH_SAVE_FAIL:
+      return {...state, loading: false};
     default:
       return state;
   }

@@ -12,7 +12,7 @@ import JwtDecode from 'jwt-decode';
 import './src/Config/ReactotronConfig';
 import ReduxNavigation from "./src/ReduxNavigation";
 import configureStore from "./src/Redux/createStore";
-// import * as CONSTANTS from "./src/Constants";
+import * as CONSTANTS from "./src/Constants";
 // import { getProfile, inProgressLoad } from "./src/Actions";
 import getTheme from "./native-base-theme/components";
 import commonColor from "./native-base-theme/variables/commonColor";
@@ -45,6 +45,7 @@ export default class App extends React.Component {
   }
 
   async _loadAssetsAsync() {
+    const token = await AsyncStorage.getItem(CONSTANTS.STORAGE_KEY);
     const imageAssets = cacheImages([
       require('./assets/bg.png'),
       require('./assets/icon.png'),
@@ -55,6 +56,16 @@ export default class App extends React.Component {
       Roboto: require("native-base/Fonts/Roboto.ttf"),
       Roboto_medium: require("native-base/Fonts/Roboto_medium.ttf")
     });
+    if(token) {
+      // store.dispatch(setlProfile(JwtDecode(token));
+      store.dispatch(NavigationActions.reset({
+        index: 0,
+        key: null,
+        actions: [
+            NavigationActions.navigate({ routeName: 'drawerStack' })
+        ]
+      }));
+    }
 
   }
 

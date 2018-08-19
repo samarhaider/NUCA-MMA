@@ -42,13 +42,13 @@ class LoginContainer extends Component {
     this.props.dispatch(passwordChanged(text));
   }
   onLoginButtonPress() {
-    this.props.navigation.navigate("home");
+    // this.props.navigation.navigate("home");
     
-    // const { email, password } = this.props;
+    const { email, password, grant_type, client_id, client_secret } = this.props;
     // // const errors = validateRules(this.props, loginValidation);
-    // // if (!errors) {
-    //   // this.props.dispatch(loginUser({ email, password }));
-    // // }
+    // if (!errors) {
+      this.props.dispatch(loginUser({ email, password, username: email, grant_type, client_id, client_secret  }));
+    // }
   }
   onRegisterButtonPress() {
     this.props.navigation.navigate("register");

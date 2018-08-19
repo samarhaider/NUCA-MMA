@@ -7,9 +7,9 @@ import {
   getDataFromStorage,
   loginUser,
   logoutUser,
-  sendVerificationCode,
+  sendPasswordResetCode,
 } from "./AuthSagas";
-import { postList, postDetail, postSave, postUpdate} from "./MatchSagas";
+import { matchList, matchDetail, matchSave } from "./MatchSagas";
 
 /* ------------- Connect Types To Sagas ------------- */
 
@@ -19,11 +19,11 @@ export default function* rootSaga() {
     // Auth
     takeLatest(CONSTANTS.LOGIN_USER, loginUser),
     takeLatest(CONSTANTS.LOGOUT_USER, logoutUser),
-    takeLatest(CONSTANTS.SEND_VERIFICATION_CODE, sendVerificationCode),
-    // Post
-    takeEvery(CONSTANTS.MATCH_LIST_FETCH, postList),
-    takeLatest(CONSTANTS.MATCH_DETAIL, postDetail),
-    takeLatest(CONSTANTS.MATCH_SAVE, postSave),
-    takeLatest(CONSTANTS.MATCH_UPDATE, postUpdate),
+    takeLatest(CONSTANTS.SEND_PASSWORD_RESET_CODE, sendPasswordResetCode),
+    // Match
+    takeEvery(CONSTANTS.MATCH_LIST_FETCH, matchList),
+    takeLatest(CONSTANTS.MATCH_DETAIL, matchDetail),
+    takeLatest(CONSTANTS.MATCH_SAVE, matchSave),
+    // takeLatest(CONSTANTS.MATCH_UPDATE, postUpdate),
   ]);
 }
