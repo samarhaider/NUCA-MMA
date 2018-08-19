@@ -16,10 +16,10 @@
       "backgroundColor": "#000"
     },
     "android": {
-      "package": "com.ynjd.mma"
+      "package": "com.appiskey.nuca"
     },
     "ios": {
-      "bundleIdentifier": "com.ynjd.mma"
+      "bundleIdentifier": "com.appiskey.nuca"
     }
   }
 }
