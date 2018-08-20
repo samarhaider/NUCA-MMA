@@ -48,7 +48,6 @@ class ResultAddContainer extends Component {
     let roundData = {};
     roundData[matchDetail.athlete_one_data.user_id] =  {...resultObj};
     roundData[matchDetail.athlete_two_data.user_id] =  {...resultObj};
-    console.tron.log(roundData)
     this.props.dispatch(addRound(roundData));
   }
 
@@ -103,7 +102,6 @@ class ResultAddContainer extends Component {
   render() {
     const { resultRounds } = this.props;
     const { match } = this.props.navigation.state.params;
-    console.tron.log(resultRounds.rounds)
     return <Container>
             {this.renderHeader()}
             <Content>

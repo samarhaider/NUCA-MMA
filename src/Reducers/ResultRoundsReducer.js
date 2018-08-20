@@ -29,7 +29,6 @@ export default (state = INITIAL_STATE, action) => {
       return {...state, rounds };
     case CONSTANTS.RESULT_CHANGED:
       const {payload} = action;
-      // console.tron.log(state);
       const rounds2 = state.rounds;
       rounds2[payload.index][payload.player_id][payload.field] = payload.text;
       return {...state, rounds: rounds2 };

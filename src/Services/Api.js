@@ -76,7 +76,6 @@ import { store } from '../../App';
     };
     const getPostDetail = (QueryString = {}) => api.get(`favors/${QueryString.id}`, QueryString);
     const saveMatch = (data = {}) => {
-      console.tron.log(data)
       let form_data = new FormData();
       form_data.append('_method', 'put');      
       for ( let key in data ) {
@@ -100,26 +99,8 @@ import { store } from '../../App';
       const headers = {
         'content-type': 'multipart/form-data',
       }
-      console.log(form_data)
       return api.post(`api/match/${data.id}`, form_data, {headers})
     };
-    const updateMatch = (data = {}) => api.put(`favors/${data.id}`, data, {
-        // headers: getHeaders()
-      });
-    const inProgressLoad = (QueryString = {}) => {
-      return getToken().then(token => {
-        api.setHeader('Authorization', `Bearer ${token}` )
-        return api.get("users/inProgressLoad.json", QueryString)
-      })
-    };
-    const trackingLocationLoadSave = (data = {}) => api.post(`operators/updateTracking.json`, data);
-    const getShipmentsList = (QueryString = {}) => {
-      return getToken().then(token => {
-        api.setHeader('Authorization', `Bearer ${token}` )
-        return api.get("users/checkYourShipment.json", QueryString)
-      })
-    };
-    const getShipmentDetail = (QueryString = {}) => api.get(`users/MacroDetails/${QueryString.id}.json`, QueryString);
       // Profile
     const getUserProfile = (QueryString = {}) => api.get(`users/${QueryString.id}`, QueryString);
     const updateAvatar = (data = {}) => {
@@ -152,8 +133,8 @@ import { store } from '../../App';
     //
     return { // a list of the API functions from step 2
       setToken, loginUser, registerUser, verifyUser, resendVerificationCode, sendPasswordResetCode, 
-      resetPassword, getMatchesList, updateMatch, getUserProfile, updateProfile, updateAvatar, getPostDetail, saveMatch,      
-      getShipmentsList, getShipmentDetail };
+      resetPassword, getMatchesList, getUserProfile, updateProfile, updateAvatar, getPostDetail, saveMatch,      
+    };
   };
 // let's return back our create method as the default.
 export default {
