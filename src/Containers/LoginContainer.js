@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
 import {
-  Root,
   Container,
   Content,
   Header,
@@ -12,15 +12,9 @@ import {
   Input,
   Text,
   Form,
-  Label,
-  H1,
-  Footer,
-  FooterTab,
   View,
   Icon,
-  Toast,
   Title,
-  StyleProvider
 } from "native-base";
 import { emailChanged, passwordChanged, loginUser } from "../Actions";
 import styles from "../styles";
@@ -30,7 +24,6 @@ import commonColor from "../../native-base-theme/variables/commonColor";
 import validateRules, { loginValidation } from "../Components/ValidationRules";
 import Wallpaper from "../Components/Wallpaper";
 import Logo from "../Components/Logo";
-import InputGroup from "../../native-base-theme/components/InputGroup";
 
 const message = "Welcome Back!"; 
 
@@ -85,7 +78,7 @@ class LoginContainer extends Component {
               <Logo message={message} />
               <Form style={{ margin: 20}} >
                   <Item >
-                    <Icon name='person' style={{marginLeft: 10}} />
+                    <FontAwesome name='user-o' style={styles.loginIcons} />
                     <Input
                       style={{color: "#FFF"}} 
                       placeholder="Email"
@@ -100,7 +93,7 @@ class LoginContainer extends Component {
                       />
                   </Item>
                 <Item>
-                  <Icon name='lock' style={{marginLeft: 10}} />
+                  <SimpleLineIcons name='lock' style={styles.loginIcons} />
                   <Input
                     style={{color: "#FFF"}} 
                     placeholder="Password" 

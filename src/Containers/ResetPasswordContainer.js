@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Toast from "react-native-root-toast";
 import {
   Container,
   Content,

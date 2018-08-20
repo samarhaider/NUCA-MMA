@@ -4108,10 +4108,6 @@ jws@^3.1.4:
     jwa "^1.1.4"
     safe-buffer "^5.0.1"
 
-jwt-decode@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/jwt-decode/-/jwt-decode-2.2.0.tgz#7d86bd56679f58ce6a84704a657dd392bba81a79"
-
 kind-of@^3.0.2:
   version "3.2.2"
   resolved "https://registry.yarnpkg.com/kind-of/-/kind-of-3.2.2.tgz#31ea21a734bab9bbb0f32466d893aea51e4a3c64"
@@ -5534,34 +5530,6 @@ react-native-maps@0.21.0:
     babel-plugin-module-resolver "^2.3.0"
     babel-preset-react-native "1.9.0"
 
-react-native-modalbox@^1.4.2:
-  version "1.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-modalbox/-/react-native-modalbox-1.4.2.tgz#818c9354c9b13327ec807c6436e8516b3b419478"
-  dependencies:
-    create-react-class "^15.6.0"
-    prop-types "^15.5.10"
-
-"react-native-prompt@https://github.com/revl-ca/react-native-prompt":
-  version "1.0.0"
-  resolved "https://github.com/revl-ca/react-native-prompt#1dce0e68f3936f5073576105e48b06439d935b2f"
-
-react-native-radio-buttons@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/react-native-radio-buttons/-/react-native-radio-buttons-1.0.0.tgz#be828b85897f80ca66ad66ad7adedb6b1890ab9d"
-
-react-native-root-siblings@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-root-siblings/-/react-native-root-siblings-2.2.0.tgz#57bb2f7b0a5399c48e14b36d5f3ae7015cd3fb95"
-  dependencies:
-    static-container "^1.0.0"
-
-react-native-root-toast@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/react-native-root-toast/-/react-native-root-toast-2.2.0.tgz#92467e2df381e745aa28994076c53f8ae76e582e"
-  dependencies:
-    prop-types "^15.5.10"
-    react-native-root-siblings "^2.2.0"
-
 react-native-safe-module@^1.1.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/react-native-safe-module/-/react-native-safe-module-1.2.0.tgz#a23824ca24edc2901913694a76646475113d570d"
@@ -5879,10 +5847,6 @@ redux-logger@^2.7.4:
   resolved "https://registry.yarnpkg.com/redux-logger/-/redux-logger-2.10.2.tgz#3c5a5f0a6f32577c1deadf6655f257f82c6c3937"
   dependencies:
     deep-diff "0.3.4"
-
-redux-persist@^5.7.2:
-  version "5.7.2"
-  resolved "https://registry.yarnpkg.com/redux-persist/-/redux-persist-5.7.2.tgz#924572670480a1a2ce70b16bf3011ffac583fdb0"
 
 redux-saga@^0.15.3:
   version "0.15.6"
@@ -6475,10 +6439,6 @@ stack-utils@^1.0.1:
 stacktrace-parser@^0.1.3:
   version "0.1.4"
   resolved "https://registry.yarnpkg.com/stacktrace-parser/-/stacktrace-parser-0.1.4.tgz#01397922e5f62ecf30845522c95c4fe1d25e7d4e"
-
-static-container@^1.0.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/static-container/-/static-container-1.2.0.tgz#1c6e92b869da47d32abe47f45f50bf39661d9c2f"
 
 "statuses@>= 1.3.1 < 2", statuses@~1.4.0:
   version "1.4.0"

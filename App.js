@@ -1,12 +1,10 @@
 import React from 'react';
 import { Provider } from "react-redux";
-import Expo, { AppLoading, Asset, Font } from "expo";
+import { AppLoading, Asset, Font } from "expo";
 import { FontAwesome } from '@expo/vector-icons';
 import { AsyncStorage, Image } from "react-native";
 import { StyleProvider, Root, ActionSheet } from 'native-base';
 import { NavigationActions } from 'react-navigation';
-import JwtDecode from 'jwt-decode';
-// import { PersistGate } from 'redux-persist/integration/react'
 
 // import Router from "./src/Router";
 import './src/Config/ReactotronConfig';

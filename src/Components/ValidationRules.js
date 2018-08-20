@@ -1,10 +1,7 @@
-// import { Toast } from "native-base";
-import { NavigationActions } from 'react-navigation';
-import Toast from "react-native-root-toast";
-import Modal from "react-native-modalbox";
+import { Toast } from "native-base";
+// import Toast from "react-native-root-toast";
 import * as CONSTANTS from "../Constants";
 import validate from "./validate";
-import { store } from "../../App";
 
 export default function validateRules(
   fields,
@@ -27,32 +24,12 @@ export function showErrors(errors) {
     Object.keys(errors).forEach(function(key) {
       errors[key].forEach(function(value) {
         errorString += `${value}
-  `;
+`;
       });
     });
   }
 
-  // Toast.show({ text: errorString, type: "danger", duration: 3000 });
-  Toast.show(errorString.trim(), {
-    duration: Toast.durations.LONG,
-    position: Toast.positions.BOTTOM,
-    shadow: true,
-    animation: true,
-    hideOnPress: true,
-    delay: 0,
-    onShow: () => {
-      // calls on toast\`s appear animation start
-    },
-    onShown: () => {
-      // calls on toast\`s appear animation end.
-    },
-    onHide: () => {
-      // calls on toast\`s hide animation start.
-    },
-    onHidden: () => {
-      // calls on toast\`s hide animation end.
-    }
-  });
+  Toast.show({ text: errorString.trim(), duration: 3000 });
 }
 
 export function showErrorsAndReturnPayload(response) {

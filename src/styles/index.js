@@ -13,7 +13,8 @@ const styles = {
   fooButtonText: {fontSize: 20, color: '#fff'},
   authHeader: { backgroundColor: "#020203", alignItems: "center" },
   authSubmitButton: { borderRadius: 5},
-  vs: {color: "#CECECE", fontSize: 25, fontWeight:"800"},
+  vs: {color: "#CECECE", fontSize: 25, fontWeight:"800", marginTop: -40,},
+  loginIcons: {marginLeft: 10, marginRight: 10, color: '#FFF', fontSize: 20},
   timerRow: {
     marginTop: -12,
     marginLeft: -16,

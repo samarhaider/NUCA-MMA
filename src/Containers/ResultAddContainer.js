@@ -46,8 +46,8 @@ class ResultAddContainer extends Component {
   addRoundWithUserId = () => {
     const { matchDetail } = this.props;
     let roundData = {};
-    roundData[matchDetail.athlete_one_data.user_id] =  resultObj;
-    roundData[matchDetail.athlete_two_data.user_id] =  resultObj;
+    roundData[matchDetail.athlete_one_data.user_id] =  {...resultObj};
+    roundData[matchDetail.athlete_two_data.user_id] =  {...resultObj};
     console.tron.log(roundData)
     this.props.dispatch(addRound(roundData));
   }
@@ -70,7 +70,7 @@ class ResultAddContainer extends Component {
   renderHeader() {
     return <Header>
       <Button transparent onPress={() => this.props.navigation.goBack()}>
-        <Icon name="arrow-back"/>
+        <Icon name="ios-arrow-back" style={{marginLeft: -5}}/>
       </Button>
       <Body>
         <Title>Add Results</Title>

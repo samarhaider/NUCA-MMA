@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Toast from "react-native-root-toast";
-import { ImageBackground } from 'react-native';
 import {
   Root,
   Container,

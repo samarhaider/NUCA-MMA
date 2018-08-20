@@ -92,25 +92,36 @@ class SelectWinnerContainer extends Component {
     this.props.dispatch(saveMatch(result));
   }
 
+  openCamera = () => {
+    const { selectWinner } = this.props;
+    const {imagesLimit, images} = selectWinner;
+    if (images.length < imagesLimit) {
+      ActionSheet.show(
+        {
+          options: BUTTONS,
+          cancelButtonIndex: CANCEL_INDEX,
+          title: "Select Photo"
+        },
+        buttonIndex => {
+          this._pickImage(buttonIndex);
+        }
+      )
+    } else {
+      alert(`You cannot add more than ${imagesLimit} images`);
+    }
+
+  }
+
   renderHeader() {
     return <Header>
     <Button transparent onPress={() => this.props.navigation.goBack()}>
-      <Icon name="arrow-back" />
+      <Icon name="ios-arrow-back" style={{marginLeft: -5}} />
     </Button>
     <Body>
       <Title>Select Winner </Title>
     </Body>
-    <Button transparent onPress={() => ActionSheet.show(
-      {
-        options: BUTTONS,
-        cancelButtonIndex: CANCEL_INDEX,
-        title: "Select Photo"
-      },
-      buttonIndex => {
-        this._pickImage(buttonIndex);
-      }
-    )}>
-      <Icon name="camera" />
+    <Button transparent onPress={() => this.openCamera()}>
+      <Icon name="ios-camera" style={{marginRight: -5}} />
     </Button>
   </Header>;
   }

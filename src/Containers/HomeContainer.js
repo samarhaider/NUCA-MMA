@@ -47,7 +47,7 @@ class HomeContainer extends Component {
                 <Title>Home</Title>
               </Body>
               <Button transparent onPress={this.onLogoutButtonPress} >
-                <Icon name="ios-power" />
+                <Icon name="ios-power" style={{marginRight: -5}} />
               </Button>
             </Header>
   }

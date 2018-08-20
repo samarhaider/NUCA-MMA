@@ -20,6 +20,10 @@ class MatchCardComponent extends Component {
     return moment(date, 'YYYY-MM-DD').format('dddd');    
   }
 
+  getDate(date) {
+    return moment(date, "YYYY-MM-DD HH:mm:ss").format("MMM DD, YYYY, h:mm a")
+  }
+
   render() {
     const { data } =  this.props;
     const profile_picture1 = data.athlete_one_data.profile_picture || uri;
@@ -28,7 +32,7 @@ class MatchCardComponent extends Component {
     <CardItem header bordered>
       <Body>
         <Text>{this.getDayName(data.schedule.start_time)}</Text>
-        <Text note>{data.schedule.start_time}</Text>
+        <Text note>{this.getDate(data.schedule.start_time)}</Text>
       </Body>
     </CardItem>
     <CardItem>

@@ -6,8 +6,8 @@ import styles from "../../src/styles";
 const deviceHeight = Dimensions.get("window").height;
 export default (variables = variable) => {
   const theme = {
-    // backgroundColor: styles.containerBgColor,
-    backgroundColor: "transparent",
+    backgroundColor: variables.cardHeaderBg,
+    // backgroundColor: "transparent",
     flex: 1,
     height: Platform.OS === "ios" ? deviceHeight : deviceHeight - 20
   };

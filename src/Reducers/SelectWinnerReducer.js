@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   loading: false,
   // winner: 1,
   // win_type: 'dec',
+  imagesLimit: 5,
   images: [
     // {
     //   "cancelled": false,

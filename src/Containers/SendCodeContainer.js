@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import Toast from "react-native-root-toast";
-import { ImageBackground } from 'react-native';
 import {
   Root,
   Container,
@@ -14,14 +12,9 @@ import {
   Input,
   Text,
   Form,
-  Label,
-  H1,
-  Footer,
-  FooterTab,
   View,
   Icon,
   Title,
-  StyleProvider
 } from "native-base";
 import { emailChanged, sendPasswordResetCode } from "../Actions";
 import styles from "../styles";
@@ -68,7 +61,7 @@ class SendCodeContainer extends Component {
       <Container>
         <Header style={styles.authHeader}>
           <Button transparent onPress={() => this.props.navigation.goBack()}>
-            <Icon name="arrow-back"/>
+            <Icon name="ios-arrow-back" style={{marginLeft: -5}} />
           </Button>
           <Body>
               <Title uppercase={true} >FORGOT PASSWORD</Title>
@@ -84,7 +77,7 @@ class SendCodeContainer extends Component {
               <Item >
                 {/* <Icon active name='md-call' />                */}
                 <Input
-                  style={{color: "#FFF"}} 
+                  style={{color: "#FFF", paddingLeft: 40}} 
                   placeholder="Enter your email address"
                   value={this.props.email}
                   onChangeText={this.onemailChanged}

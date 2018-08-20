@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {StyleSheet, Image} from 'react-native';
-import { H3, View } from "native-base";
+import { Text, View } from "native-base";
 
 import logoImg from '../../assets/icon.png';
 
@@ -10,7 +10,7 @@ export default class Logo extends Component {
   renderMessage() {
     const message = this.props;
     if (message) {
-      return <H3 style={styles.text}>{message.message}</H3>
+      return <Text style={styles.text}>{message.message}</Text>
     }
   }
 
@@ -33,13 +33,16 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   image: {
-    width: 250,
-    height: 250,
+    width: 200,
+    height: 200,
   },
   text: {
+    textAlign: "center",
     color: 'white',
     fontWeight: 'bold',
     backgroundColor: 'transparent',
-    marginTop: -60,
+    marginTop: -50,
+    marginLeft: 20,
+    marginRight: 20,
   },
 });

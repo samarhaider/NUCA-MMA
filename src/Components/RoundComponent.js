@@ -14,6 +14,7 @@ import {
   Col,
   Icon,
   Item,
+  Button,
 } from "native-base";
 import {
   removeRound,
@@ -48,11 +49,11 @@ class RoundComponent extends Component {
 
     return <Card>
     <CardItem header bordered>
-      <Left>
+      <Left style={{ marginLeft: -10}}>
         <Text>Round - { index +1}</Text>
       </Left>
       <Right>
-        <Icon name="close-circle" color="#000" onPress={() => this.onPressRemoveRound(index)} />
+        <Icon name="ios-close-circle-outline" style={{color: "#000"}} onPress={() => this.onPressRemoveRound(index)} style={{ paddingLeft: 20}} />
       </Right>
     </CardItem>
     <CardItem>
