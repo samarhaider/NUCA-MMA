@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
   Container,
   Content,
@@ -117,6 +118,7 @@ class LoginContainer extends Component {
                   </Button>
                 </View>                
               </Form>
+              <KeyboardSpacer/>
             </Content>
             </Wallpaper>
           </Container>;

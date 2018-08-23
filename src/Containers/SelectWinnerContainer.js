@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ImagePicker, Permissions } from "expo";
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { Platform } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
   ActionSheet,
   Container,
   Content,
   Row,
   Col,
+  H1,
   Button,
   Card,
   CardItem,
@@ -26,12 +28,14 @@ import {
   Thumbnail,
   Spinner,
 } from "native-base";
+import Modal from 'react-native-modalbox';
 import {
   winnerImageAdd,
   winnerImageRemove,
   onWinnerChanged,
   onWinnerTypeChanged,
   saveMatch,
+  modalSuccessResultSubmit,
 } from '../Actions';
 import styles from "../styles";
 import MatchCardComponent from '../Components/MatchCardComponent'
@@ -40,6 +44,15 @@ var BUTTONS = ["From Camera", "From	Gallery", "Cancel"];
 var CANCEL_INDEX = 2;
 
 class SelectWinnerContainer extends Component {
+
+  componentDidMount() {
+    this.props.dispatch(modalSuccessResultSubmit(false))
+  }
+
+  closeModal = () => {
+    this.props.dispatch(modalSuccessResultSubmit(false))
+    this.props.navigation.navigate("home");
+  }
 
   onWinnerChangedValue = payload => {
     this.props.dispatch(onWinnerChanged(payload));
@@ -110,6 +123,18 @@ class SelectWinnerContainer extends Component {
       alert(`You cannot add more than ${imagesLimit} images`);
     }
 
+  }
+
+  renderModalSuccess () {
+    return (<Modal style={styles.modal} isOpen={this.props.selectWinner.modalSuccess} onClosed={() => this.closeModal()}>
+    <Col>
+      <SimpleLineIcons name="check" size={80} color="#848484" />
+    </Col>
+      <H1 style={styles.successText}>Successful!</H1>
+    <Col>
+      <Text style={styles.modalText}>Your result has been successfully added.</Text>
+    </Col>
+  </Modal>);
   }
 
   renderHeader() {
@@ -238,7 +263,9 @@ class SelectWinnerContainer extends Component {
             {this.renderResult(matchDetail)}
             {this.renderAttachments()}
             {this.renderFooter()}
+            <KeyboardSpacer />
           </Content>
+          {this.renderModalSuccess()}
         </Container>;
   }
 }

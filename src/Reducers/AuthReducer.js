@@ -10,6 +10,7 @@ const INITIAL_STATE = {
   // email: "eino41@example.net",
   password: "",
   email: "",
+  modalSuccess: false,
   // user: null,
   token: null,
   error: '',
@@ -53,13 +54,14 @@ export default (state = INITIAL_STATE, action) => {
       return { ...state, data: action.payload, loading: false };
     case CONSTANTS.RESEND_VERIFICATION_CODE_FAIL:
       return { ...state, error: action.payload, verification_code: "", loading: false };
+    case CONSTANTS.MODAL_SUCCESS_RESEND_PASSWORD:
+      return { ...state, modalSuccess: action.payload };
     case CONSTANTS.SEND_PASSWORD_RESET_CODE:
-      return { ...state, loading: true, error: "" };
+      return { ...state, loading: true, error: "", modalSuccess: false  };
     case CONSTANTS.SEND_PASSWORD_RESET_CODE_SUCCESS:
-      const  { phone } = action.payload;
-      return { ...state, ...INITIAL_STATE, phone, data: action.payload };
+      return { ...state, ...INITIAL_STATE, ...action.payload, modalSuccess: true };
     case CONSTANTS.SEND_PASSWORD_RESET_CODE_FAIL:
-      return { ...state, error: action.payload, code: "", loading: false };
+      return { ...state, error: action.payload, loading: false, modalSuccess: false };
     case CONSTANTS.CHANGE_PASSWORD:
       return { ...state, loading: true, error: "" };
     case CONSTANTS.CHANGE_PASSWORD_SUCCESS:

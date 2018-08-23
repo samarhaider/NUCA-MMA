@@ -22,6 +22,7 @@ const INITIAL_STATE = {
     //   "width": 1668,
     //   },
   ],
+  modalSuccess: false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -38,11 +39,13 @@ export default (state = INITIAL_STATE, action) => {
       // let images = state.images.filter(item => item !== action.payload)
       return {...state, images };
     case CONSTANTS.MATCH_SAVE:
-      return {...state, loading: true};
+      return {...state, loading: true, modalSuccess: false};
     case CONSTANTS.MATCH_SAVE_SUCCESS:
-      return {...state, loading: false};
+      return {...state, loading: false, modalSuccess: true};
     case CONSTANTS.MATCH_SAVE_FAIL:
-      return {...state, loading: false};
+      return {...state, loading: false, modalSuccess: false};
+    case CONSTANTS.MODAL_SUCCESS_RESULT_SUBMIT:
+      return {...state, modalSuccess: action.payload}
     default:
       return state;
   }

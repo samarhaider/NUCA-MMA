@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { ImagePicker } from "expo";
-import { Image } from "react-native";
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
   Container,
   Content,
@@ -19,13 +18,12 @@ import {
   FooterTab,
 } from "native-base";
 import {
+  setRoundInitial,
   addRound,
-  removeRound,
 } from "../Actions";
 import styles from "../styles";
 import getTheme from "../../native-base-theme/components";
 import commonColor from "../../native-base-theme/variables/commonColor";
-import * as CONSTANTS from '../Constants';
 import MatchCardComponent from '../Components/MatchCardComponent'
 import RoundComponent from '../Components/RoundComponent'
 
@@ -40,8 +38,13 @@ const resultObj = {
 class ResultAddContainer extends Component {
 
   componentDidMount() {
+    this.props.dispatch(setRoundInitial());
     this.addRoundWithUserId();
   }
+
+  // componentWillUnmount() {
+  //   // this.props.dispatch(addRound([]));
+  // }
 
   addRoundWithUserId = () => {
     const { matchDetail } = this.props;
@@ -110,6 +113,7 @@ class ResultAddContainer extends Component {
                 return <RoundComponent key={i} index={i} data={data} />
               })}
             {this.renderFooter()}
+            <KeyboardSpacer />
             </Content>
           </Container>;
   }

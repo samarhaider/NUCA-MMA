@@ -1,5 +1,9 @@
 import * as CONSTANTS from '../Constants';
 
+export const setRoundInitial = () => {
+  return { type: CONSTANTS.ROUND_SET_INITIAL };
+};
+
 export const addRound = payload => {
   return { type: CONSTANTS.ROUND_ADD, payload };
 };

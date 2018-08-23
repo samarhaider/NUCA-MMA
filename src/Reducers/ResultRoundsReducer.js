@@ -14,8 +14,9 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.ROUND_SET_INITIAL:
+      return {...INITIAL_STATE};
     case CONSTANTS.ROUND_ADD:
-      // return {...state, rounds: [ ...state.rounds, roundData ]};
       return {...state, rounds: [ ...state.rounds, action.payload ]};
     // case CONSTANTS.MATCH_DETAIL_SUCCESS:
     //   // roundData = [];

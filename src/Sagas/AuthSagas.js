@@ -119,10 +119,9 @@ export function* sendPasswordResetCode(action) {
   const {error, message} = payload;
 
   if (response.ok) {
-    alert(message || error);
     // do data conversion here if needed
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_SUCCESS, payload });
-    yield put(NavigationActions.navigate({ routeName: 'login' }));
+    // yield put(NavigationActions.navigate({ routeName: 'login' }));
   } else {
     alert(message || error);
     // const payload = showErrorsAndReturnPayload(response);

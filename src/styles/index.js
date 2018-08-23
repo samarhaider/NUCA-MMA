@@ -15,6 +15,17 @@ const styles = {
   authSubmitButton: { borderRadius: 5},
   vs: {color: "#CECECE", fontSize: 25, fontWeight:"800", marginTop: -40,},
   loginIcons: {marginLeft: 10, marginRight: 10, color: '#FFF', fontSize: 20},
+  modal: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingTop: 40,
+    paddingLeft: 10,
+    height: 250,
+    width: 300,
+    // backgroundColor: "#3B5998"
+  },
+  successText: { color: "#da0011", marginTop: 15,},
+  modalText: {color: "#848484", textAlign: 'center', paddingHorizontal: 30,},
   timerRow: {
     marginTop: -12,
     marginLeft: -16,

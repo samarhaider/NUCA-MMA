@@ -14,7 +14,7 @@
       "assets/**"
     ],
     "androidStatusBar": {
-      "backgroundColor": "#000"
+      "backgroundColor": "#000000"
     },
     "android": {
       "package": "com.appiskey.nuca"

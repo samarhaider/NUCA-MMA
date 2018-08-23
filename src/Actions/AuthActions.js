@@ -82,6 +82,13 @@ export const sendPasswordResetCode = payload => {
   };
 };
 
+export const modalSuccessPasswordResetCode = payload => {
+  return {
+    type:  CONSTANTS.MODAL_SUCCESS_RESEND_PASSWORD,
+    payload
+  };
+};
+
 export const changePassword = payload => {
   return {
     type:  CONSTANTS.CHANGE_PASSWORD,

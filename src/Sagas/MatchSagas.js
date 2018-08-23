@@ -42,7 +42,7 @@ export function* matchSave(action) {
     const payload = response.data;
     // do data conversion here if needed
     yield put({ type: CONSTANTS.MATCH_SAVE_SUCCESS, payload });
-    yield put(NavigationActions.navigate({ routeName: 'home' }));
+    // yield put(NavigationActions.navigate({ routeName: 'home' }));
   } else {
     const payload = showErrorsAndReturnPayload(response);
     yield put({ type: CONSTANTS.MATCH_SAVE_FAIL, payload });

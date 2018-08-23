@@ -1,7 +1,9 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { SimpleLineIcons } from "@expo/vector-icons";
 import {
-  Root,
+  H1,
   Container,
   Content,
   Header,
@@ -15,8 +17,10 @@ import {
   View,
   Icon,
   Title,
+  Col,
 } from "native-base";
-import { emailChanged, sendPasswordResetCode } from "../Actions";
+import Modal from 'react-native-modalbox';
+import { emailChanged, sendPasswordResetCode, modalSuccessPasswordResetCode } from "../Actions";
 import styles from "../styles";
 import getTheme from "../../native-base-theme/components";
 import commonColor from "../../native-base-theme/variables/commonColor";
@@ -29,6 +33,16 @@ import Logo from "../Components/Logo";
 const message = "Sed ut perspiciatis unde omnis iste natus error sit ptatem"; 
 
 class SendCodeContainer extends Component {
+  
+  componentDidMount() {
+    this.props.dispatch(modalSuccessPasswordResetCode(false))
+  }
+
+  closeModal = () => {
+    this.props.dispatch(modalSuccessPasswordResetCode(false))
+    this.props.navigation.navigate("login");
+  }
+
   onSubmitButtonPress = () => {
     // const errors = validateRules(this.props, sendCodeValidation);
     // if (!errors) {
@@ -39,7 +53,7 @@ class SendCodeContainer extends Component {
   }
   onemailChanged = (text) => {
     this.props.dispatch(emailChanged(text));
-  }
+  }  
   renderSubmitButton() {
     if (this.props.loading) {
       return <Button full>
@@ -54,6 +68,18 @@ class SendCodeContainer extends Component {
         </Text>
       </Button>
     );
+  }
+
+  renderModalSuccess () {
+    return (<Modal style={styles.modal} isOpen={this.props.modalSuccess} onClosed={() => this.closeModal()}>
+    <Col>
+      <SimpleLineIcons name="check" size={80} color="#848484" />
+    </Col>
+      <H1 style={styles.successText}>Successful!</H1>
+    <Col>
+      <Text style={styles.modalText}>We have sent a password reset link to your email address</Text>
+    </Col>
+  </Modal>);
   }
 
   render() {
@@ -92,8 +118,10 @@ class SendCodeContainer extends Component {
                 {this.renderSubmitButton()}
               </View>
             </Form>
+            <KeyboardSpacer />
           </Content>
         </Wallpaper>
+        {this.renderModalSuccess()}
       </Container>
     );
   }

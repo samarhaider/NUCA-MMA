@@ -80,25 +80,33 @@ import { store } from '../../App';
       form_data.append('_method', 'put');      
       for ( let key in data ) {
           if (key == 'rounds' ) {
-            for ( let index in data['rounds'] ) {
-              const intIndex = parseInt(index);
-              form_data.append('rounds[]', data['rounds'][intIndex]);
+            for ( let index in data['rounds']) {
+              for ( let userId in data['rounds'][index]) {
+                for ( let roundName in data['rounds'][index][userId]) {
+                  form_data.append(`rounds[${index}][${userId}][${roundName}]`, data['rounds'][index][userId][roundName]);
+                }
+              }
             }
+          } else if (key == 'images' ) {
+
           } else {
             form_data.append(key, data[key]);
           }
       }
       const { images } = data;
       for ( let index in images ) {
-        form_data.append('images[]', {
+        let uriParts = images[index].uri.split('.');
+        let fileType = uriParts[uriParts.length - 1];      
+        form_data.append(`images[${index}]`, {
           uri: images[index].uri,
-          type: 'image/jpeg',
-          name: `result_img_${index}`,
+          name: `photo_${index}.${fileType}`,
+          type: `image/${fileType}`,
         });
       }
       const headers = {
         'content-type': 'multipart/form-data',
       }
+
       return api.post(`api/match/${data.id}`, form_data, {headers})
     };
       // Profile
