@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   Container,
   Content,
@@ -108,12 +108,13 @@ class ResultAddContainer extends Component {
     return <Container>
             {this.renderHeader()}
             <Content>
-              <MatchCardComponent data={{...match}} />
-              {resultRounds.rounds.map((data,i) => {
-                return <RoundComponent key={i} index={i} data={data} />
-              })}
-            {this.renderFooter()}
-            <KeyboardSpacer />
+              <KeyboardAwareScrollView enableOnAndroid={true} keyboardShouldPersistTaps='handled'>
+                <MatchCardComponent data={{...match}} />
+                  {resultRounds.rounds.map((data,i) => {
+                    return <RoundComponent key={i} index={i} data={data} />
+                  })}
+                {this.renderFooter()}
+              </KeyboardAwareScrollView>
             </Content>
           </Container>;
   }

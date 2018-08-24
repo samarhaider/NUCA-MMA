@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { ImagePicker, Permissions } from "expo";
 import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { Platform } from 'react-native';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import {
   ActionSheet,
   Container,
@@ -263,7 +262,6 @@ class SelectWinnerContainer extends Component {
             {this.renderResult(matchDetail)}
             {this.renderAttachments()}
             {this.renderFooter()}
-            <KeyboardSpacer />
           </Content>
           {this.renderModalSuccess()}
         </Container>;

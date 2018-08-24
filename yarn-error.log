@@ -15,7 +15,7 @@ Platform:
 
 npm manifest: 
   {
-    "name": "strictly-air",
+    "name": "nuca-mma",
     "version": "0.1.0",
     "private": true,
     "devDependencies": {

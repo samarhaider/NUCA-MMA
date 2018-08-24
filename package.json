@@ -1,5 +1,5 @@
 {
-  "name": "strictly-air",
+  "name": "nuca-mma",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
@@ -31,7 +31,7 @@
     "native-base": "^2.3.3",
     "react": "16.3.1",
     "react-native": "0.55.0",
-    "react-native-keyboard-spacer": "^0.4.1",
+    "react-native-keyboard-aware-scroll-view": "^0.7.1",
     "react-native-modalbox": "^1.6.0",
     "react-navigation": "1.0.0-beta.27",
     "react-navigation-redux-helpers": "^1.0.1",

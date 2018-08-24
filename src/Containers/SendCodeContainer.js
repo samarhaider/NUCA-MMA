@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 import { SimpleLineIcons } from "@expo/vector-icons";
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   H1,
   Container,
@@ -98,27 +98,31 @@ class SendCodeContainer extends Component {
         </Header>
         <Wallpaper >
           <Content padder >
-            <Logo message={message} />
-            <Form style={{ margin: 20 }}>
-              <Item >
-                {/* <Icon active name='md-call' />                */}
-                <Input
-                  style={{color: "#FFF", paddingLeft: 40}} 
-                  placeholder="Enter your email address"
-                  value={this.props.email}
-                  onChangeText={this.onemailChanged}
-                  keyboardType="email-address"
-                  disabled={this.props.loading}
-                  autoCorrect={false}
-                  autoCapitalize={'none'}
-                  returnKeyType={'done'}
-                />
-              </Item>
-              <View>
-                {this.renderSubmitButton()}
-              </View>
-            </Form>
-            <KeyboardSpacer />
+            <KeyboardAwareScrollView
+              extraScrollHeight={100}
+              enableOnAndroid={true} 
+              keyboardShouldPersistTaps='handled'>
+              <Logo message={message} />
+              <Form style={{ margin: 20 }}>
+                <Item >
+                  {/* <Icon active name='md-call' />                */}
+                  <Input
+                    style={{color: "#FFF", paddingLeft: 40}} 
+                    placeholder="Enter your email address"
+                    value={this.props.email}
+                    onChangeText={this.onemailChanged}
+                    keyboardType="email-address"
+                    disabled={this.props.loading}
+                    autoCorrect={false}
+                    autoCapitalize={'none'}
+                    returnKeyType={'done'}
+                  />
+                </Item>
+                <View>
+                  {this.renderSubmitButton()}
+                </View>
+              </Form>
+            </KeyboardAwareScrollView>
           </Content>
         </Wallpaper>
         {this.renderModalSuccess()}

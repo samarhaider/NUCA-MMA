@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { FontAwesome, SimpleLineIcons } from "@expo/vector-icons";
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   Container,
   Content,
@@ -76,50 +76,55 @@ class LoginContainer extends Component {
             </Header>
           <Wallpaper>
             <Content padder>
-              <Logo message={message} />
-              <Form style={{ margin: 20}} >
-                  <Item >
-                    <FontAwesome name='user-o' style={styles.loginIcons} />
+              <KeyboardAwareScrollView
+                extraScrollHeight={100}
+                enableOnAndroid={true} 
+                keyboardShouldPersistTaps='handled'
+              >
+                <Logo message={message} />
+                <Form style={{ margin: 20}} >
+                    <Item >
+                      <FontAwesome name='user-o' style={styles.loginIcons} />
+                      <Input
+                        style={{color: "#FFF"}} 
+                        placeholder="Email"
+                        keyboardType="email-address"
+                        onChangeText={this.onEmailChanged.bind(this)}
+                        value={this.props.email}
+                        disabled={this.props.loading}                      
+                        autoCorrect={false}
+                        autoCapitalize={false}
+                        autoCapitalize={'none'}
+                        returnKeyType={'done'}
+                        />
+                    </Item>
+                  <Item>
+                    <SimpleLineIcons name='lock' style={styles.loginIcons} />
                     <Input
                       style={{color: "#FFF"}} 
-                      placeholder="Email"
-                      keyboardType="email-address"
-                      onChangeText={this.onEmailChanged.bind(this)}
-                      value={this.props.email}
-                      disabled={this.props.loading}                      
+                      placeholder="Password" 
+                      onChangeText={this.onPasswordChanged.bind(this)} 
+                      value={this.props.password} 
+                      secureTextEntry 
+                      disabled={this.props.loading} 
                       autoCorrect={false}
-                      autoCapitalize={false}
                       autoCapitalize={'none'}
                       returnKeyType={'done'}
                       />
-                  </Item>
-                <Item>
-                  <SimpleLineIcons name='lock' style={styles.loginIcons} />
-                  <Input
-                    style={{color: "#FFF"}} 
-                    placeholder="Password" 
-                    onChangeText={this.onPasswordChanged.bind(this)} 
-                    value={this.props.password} 
-                    secureTextEntry 
-                    disabled={this.props.loading} 
-                    autoCorrect={false}
-                    autoCapitalize={'none'}
-                    returnKeyType={'done'}
-                    />
-                  </Item>
-                <View>
-                  {this.renderLoginButton()}
-                </View>
-                <View style={{alignSelf: 'center'}} >
-                  <Button transparent onPress={this.onForgetPasswordButtonPress.bind(this)}>
-                    <Text uppercase={false} style={{textDecorationLine: "underline", color: "#FFF"}} >
-                      Forgot Password
-                    </Text>
-                  </Button>
-                </View>                
-              </Form>
-              <KeyboardSpacer/>
-            </Content>
+                    </Item>
+                  <View>
+                    {this.renderLoginButton()}
+                  </View>
+                  <View style={{alignSelf: 'center'}} >
+                    <Button transparent onPress={this.onForgetPasswordButtonPress.bind(this)}>
+                      <Text uppercase={false} style={{textDecorationLine: "underline", color: "#FFF"}} >
+                        Forgot Password
+                      </Text>
+                    </Button>
+                  </View>
+                </Form>
+                </KeyboardAwareScrollView>
+              </Content>
             </Wallpaper>
           </Container>;
   }
