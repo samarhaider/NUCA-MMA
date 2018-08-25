@@ -24,6 +24,7 @@ import MatchCardComponent from '../Components/MatchCardComponent'
 class HomeContainer extends Component {
 
   componentDidMount() {
+    this.setState({showNextScreen: true});
     this.props.dispatch(getMatches({}));
   }
   
@@ -33,8 +34,17 @@ class HomeContainer extends Component {
   }
 
   onMatchClick = (match) => {
-    this.props.dispatch({type: CONSTANTS.MATCH_DETAIL_SUCCESS, payload: match});
-    this.props.navigation.navigate("resultAdd", {match})
+    if (this.state.showNextScreen) {
+      // enable after 3 second
+      setTimeout(()=>{
+        this.setState({
+          showNextScreen: true,
+      });
+    }, 3000);
+      this.setState({showNextScreen: false});
+      this.props.dispatch({type: CONSTANTS.MATCH_DETAIL_SUCCESS, payload: match});
+      this.props.navigation.navigate("resultAdd", {match})
+    }
   }
   
   renderHeader() {

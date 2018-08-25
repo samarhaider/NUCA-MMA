@@ -44,6 +44,7 @@ class ResultAddContainer extends Component {
   }
 
   componentWillMount() {
+    this.setState({showNextScreen: true});
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
@@ -70,8 +71,17 @@ class ResultAddContainer extends Component {
   }
 
   _onFinishPress = () => {
-    const { match } = this.props.navigation.state.params;
-    this.props.navigation.navigate("selectWinner", {match});
+    if (this.state.showNextScreen) {
+      // enable after 3 second
+      setTimeout(()=>{
+        this.setState({
+          showNextScreen: true,
+      });
+    }, 3000);
+      this.setState({showNextScreen: false});
+      const { match } = this.props.navigation.state.params;
+      this.props.navigation.navigate("selectWinner", {match});
+    }
   }
 
   onPressAddRound = () => {
