@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { ImagePicker, Permissions } from "expo";
 import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
-import { Platform } from 'react-native';
+import { Platform, BackHandler } from 'react-native';
 import {
   ActionSheet,
   Container,
@@ -44,6 +44,24 @@ var CANCEL_INDEX = 2;
 
 class SelectWinnerContainer extends Component {
 
+  constructor(props) {
+    super(props)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
+  
   componentDidMount() {
     this.props.dispatch(modalSuccessResultSubmit(false))
   }

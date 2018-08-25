@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
+import { BackHandler } from 'react-native';
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
@@ -34,6 +35,24 @@ const message = "Sed ut perspiciatis unde omnis iste natus error sit ptatem";
 
 class SendCodeContainer extends Component {
   
+  constructor(props) {
+    super(props)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
   componentDidMount() {
     this.props.dispatch(modalSuccessPasswordResetCode(false))
   }

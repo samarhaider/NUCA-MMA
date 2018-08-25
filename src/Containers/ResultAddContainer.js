@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { BackHandler } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   Container,
@@ -37,14 +38,28 @@ const resultObj = {
 }
 class ResultAddContainer extends Component {
 
+  constructor(props) {
+    super(props)
+    this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
+  }
+
+  componentWillMount() {
+    BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  componentWillUnmount() {
+    BackHandler.removeEventListener('hardwareBackPress', this.handleBackButtonClick);
+  }
+
+  handleBackButtonClick() {
+    this.props.navigation.goBack(null);
+    return true;
+  }
+
   componentDidMount() {
     this.props.dispatch(setRoundInitial());
     this.addRoundWithUserId();
   }
-
-  // componentWillUnmount() {
-  //   // this.props.dispatch(addRound([]));
-  // }
 
   addRoundWithUserId = () => {
     const { matchDetail } = this.props;
