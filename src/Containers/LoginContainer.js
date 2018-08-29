@@ -75,13 +75,13 @@ class LoginContainer extends Component {
               </Body>
             </Header>
           <Wallpaper>
+            <KeyboardAwareScrollView
+              extraScrollHeight={100}
+              enableOnAndroid={true} 
+              keyboardShouldPersistTaps='handled'
+            >
             <Content padder>
-              <KeyboardAwareScrollView
-                extraScrollHeight={100}
-                enableOnAndroid={true} 
-                keyboardShouldPersistTaps='handled'
-              >
-                <Logo message={message} />
+              <Logo message={message} />
                 <Form style={{ margin: 20}} >
                     <Item >
                       <FontAwesome name='user-o' style={styles.loginIcons} />
@@ -123,8 +123,8 @@ class LoginContainer extends Component {
                     </Button>
                   </View>
                 </Form>
-                </KeyboardAwareScrollView>
               </Content>
+              </KeyboardAwareScrollView>
             </Wallpaper>
           </Container>;
   }

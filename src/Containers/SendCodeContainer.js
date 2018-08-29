@@ -116,11 +116,12 @@ class SendCodeContainer extends Component {
           </Button>
         </Header>
         <Wallpaper >
-          <Content padder >
-            <KeyboardAwareScrollView
-              extraScrollHeight={100}
-              enableOnAndroid={true} 
-              keyboardShouldPersistTaps='handled'>
+        <KeyboardAwareScrollView
+            extraScrollHeight={100}
+            enableOnAndroid={true} 
+            keyboardShouldPersistTaps='handled'
+            >
+            <Content padder >
               <Logo message={message} />
               <Form style={{ margin: 20 }}>
                 <Item >
@@ -141,8 +142,8 @@ class SendCodeContainer extends Component {
                   {this.renderSubmitButton()}
                 </View>
               </Form>
-            </KeyboardAwareScrollView>
-          </Content>
+            </Content>
+          </KeyboardAwareScrollView>
         </Wallpaper>
         {this.renderModalSuccess()}
       </Container>

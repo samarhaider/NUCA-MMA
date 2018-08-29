@@ -132,15 +132,19 @@ class ResultAddContainer extends Component {
     const { match } = this.props.navigation.state.params;
     return <Container>
             {this.renderHeader()}
-            <Content>
-              <KeyboardAwareScrollView enableOnAndroid={true} keyboardShouldPersistTaps='handled'>
+            <KeyboardAwareScrollView
+              extraScrollHeight={100}
+              enableOnAndroid={true} 
+              keyboardShouldPersistTaps='handled'
+            >
+              <Content>
                 <MatchCardComponent data={{...match}} wallpaper={true} />
                   {resultRounds.rounds.map((data,i) => {
                     return <RoundComponent key={i} index={i} data={data} />
                   })}
                 {this.renderFooter()}
-              </KeyboardAwareScrollView>
-            </Content>
+              </Content>
+            </KeyboardAwareScrollView>
           </Container>;
   }
 }
