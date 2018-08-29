@@ -5,6 +5,7 @@ import { FontAwesome } from '@expo/vector-icons';
 import { AsyncStorage, Image } from "react-native";
 import { StyleProvider, Root, ActionSheet } from 'native-base';
 import { NavigationActions } from 'react-navigation';
+import { ActionSheetProvider } from '@expo/react-native-action-sheet';
 
 // import Router from "./src/Router";
 import './src/Config/ReactotronConfig';
@@ -79,7 +80,9 @@ export default class App extends React.Component {
       <Provider store={store}>
         <StyleProvider style={getTheme(commonColor)}>
           <Root>
-            <ReduxNavigation />
+            <ActionSheetProvider>
+              <ReduxNavigation />
+            </ActionSheetProvider>
           </Root>
         </StyleProvider>
       </Provider>

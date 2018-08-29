@@ -25,6 +25,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@expo/react-native-action-sheet": "^1.1.0",
     "apisauce": "^0.14.3",
     "expo": "^27.0.0",
     "moment": "^2.22.2",

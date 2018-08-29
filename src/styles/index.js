@@ -1,6 +1,3 @@
-import { Platform, StatusBar, Text } from "react-native";
-import { statusBarColor } from "../../native-base-theme/variables/commonColor";
-
 const textColor = '#FFFF';
 const themeColor = "#FAFAFA";
 // const backGroundColor = "#16364f";
@@ -13,7 +10,7 @@ const styles = {
   fooButtonText: {fontSize: 20, color: '#fff'},
   authHeader: { backgroundColor: "#020203", alignItems: "center" },
   authSubmitButton: { borderRadius: 5},
-  vs: {color: "#CECECE", fontSize: 25, fontWeight:"800", marginTop: -40,},
+  vs: {color: "#CECECE", fontSize: 30, fontWeight:"bold", marginTop: -40,},
   loginIcons: {marginLeft: 10, marginRight: 10, color: '#FFF', fontSize: 20},
   modal: {
     justifyContent: 'center',

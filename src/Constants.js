@@ -1,3 +1,4 @@
+export const S3_BASE_URL = 'https://s3.us-east-2.amazonaws.com/images.nucamma.com/';
 // export const API_BASE_URL = 'http://localhost/strictlyair-web/api';
 export const API_BASE_URL = 'http://devport.nucamma.com/';
 // Get Data from local storage

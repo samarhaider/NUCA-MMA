@@ -9,12 +9,10 @@ import {
   Left,
   Right,
   Text,
-  H2,
   Row,
   Col,
   Icon,
   Item,
-  Button,
 } from "native-base";
 import {
   removeRound,
@@ -22,7 +20,6 @@ import {
 } from "../Actions";
 
 import styles from "../styles";
-import commonColor from "../../native-base-theme/variables/commonColor";
 
 class RoundComponent extends Component {
 
@@ -93,7 +90,7 @@ class RoundComponent extends Component {
               <Input
                 keyboardType="numeric"
                 returnKeyType = {"next"}
-                placeholder="Total Strike" 
+                placeholder="Total Strikes" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'total_strike')} 
                 value={rounds[index][matchDetail.athlete_one_data.user_id]['total_strike']} 
                 // value={this.props.total_strike} 
@@ -105,7 +102,7 @@ class RoundComponent extends Component {
               <Input
                 keyboardType="numeric"
                 returnKeyType = {"next"}
-                placeholder="Significant Strike" 
+                placeholder="Significant Strikes"
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'significant_strike')} 
                 value={rounds[index][matchDetail.athlete_one_data.user_id]['significant_strike']} 
                   // value={this.props.significant_strike} 
@@ -177,7 +174,7 @@ class RoundComponent extends Component {
           <Col>
             <Item style={style.rightItem}>
               <Input
-                placeholder="Total Strike" 
+                placeholder="Total Strikes" 
                 keyboardType="numeric"
                 returnKeyType = {"next"}
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'total_strike')} 
@@ -190,7 +187,7 @@ class RoundComponent extends Component {
             <Item style={style.leftItem}>
               <Input
                 keyboardType="numeric"
-                placeholder="Significant Strike" 
+                placeholder="Significant Strikes" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'significant_strike')} 
                 value={rounds[index][matchDetail.athlete_two_data.user_id]['significant_strike']} 
                   // value={this.props.significant_strike} 

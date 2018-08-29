@@ -134,7 +134,7 @@ class ResultAddContainer extends Component {
             {this.renderHeader()}
             <Content>
               <KeyboardAwareScrollView enableOnAndroid={true} keyboardShouldPersistTaps='handled'>
-                <MatchCardComponent data={{...match}} />
+                <MatchCardComponent data={{...match}} wallpaper={true} />
                   {resultRounds.rounds.map((data,i) => {
                     return <RoundComponent key={i} index={i} data={data} />
                   })}

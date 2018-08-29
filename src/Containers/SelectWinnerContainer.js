@@ -4,7 +4,6 @@ import { ImagePicker, Permissions } from "expo";
 import { MaterialIcons, SimpleLineIcons } from "@expo/vector-icons";
 import { Platform, BackHandler } from 'react-native';
 import {
-  ActionSheet,
   Container,
   Content,
   Row,
@@ -28,6 +27,7 @@ import {
   Spinner,
 } from "native-base";
 import Modal from 'react-native-modalbox';
+import { connectActionSheet } from '@expo/react-native-action-sheet';
 import {
   winnerImageAdd,
   winnerImageRemove,
@@ -42,6 +42,7 @@ import MatchCardComponent from '../Components/MatchCardComponent'
 var BUTTONS = ["From Camera", "From	Gallery", "Cancel"];
 var CANCEL_INDEX = 2;
 
+@connectActionSheet
 class SelectWinnerContainer extends Component {
 
   constructor(props) {
@@ -98,6 +99,7 @@ class SelectWinnerContainer extends Component {
       if (status === 'granted') {
         result = await ImagePicker.launchImageLibraryAsync({
           // allowsEditing: true,
+          quality: 0.5,
           aspect: [4, 3]
         });
       } else {
@@ -126,16 +128,25 @@ class SelectWinnerContainer extends Component {
     const { selectWinner } = this.props;
     const {imagesLimit, images} = selectWinner;
     if (images.length < imagesLimit) {
-      ActionSheet.show(
-        {
-          options: BUTTONS,
-          cancelButtonIndex: CANCEL_INDEX,
-          title: "Select Photo"
-        },
-        buttonIndex => {
+      this.props.showActionSheetWithOptions({
+        options: BUTTONS,
+        cancelButtonIndex: CANCEL_INDEX,
+        title: "Select Photo"
+      },
+      (buttonIndex) => {
           this._pickImage(buttonIndex);
-        }
-      )
+      });
+    
+      // ActionSheet.show(
+      //   {
+      //     options: BUTTONS,
+      //     cancelButtonIndex: CANCEL_INDEX,
+      //     title: "Select Photo"
+      //   },
+      //   buttonIndex => {
+      //     this._pickImage(buttonIndex);
+      //   }
+      // )
     } else {
       alert(`You cannot add more than ${imagesLimit} images`);
     }
@@ -186,6 +197,7 @@ class SelectWinnerContainer extends Component {
                       selectedValue={this.props.selectWinner.winner}
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
                       onValueChange={this.onWinnerChangedValue.bind(this)}>
+                      <Picker.Item label="Select a Winner" value={null} />
                       <Picker.Item label={matchDetail.athlete_one_data.name} value={matchDetail.athlete_one_data.user_id} />
                       <Picker.Item label={matchDetail.athlete_two_data.name} value={matchDetail.athlete_two_data.user_id} />
                     </Picker>
@@ -199,6 +211,7 @@ class SelectWinnerContainer extends Component {
                       selectedValue={this.props.selectWinner.win_type}
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
                       onValueChange={this.onWinnerTypeChangedValue.bind(this)}>
+                      <Picker.Item label="Select Win Type" value={null} />
                       <Picker.Item label="KO" value="ko/tko" />
                       <Picker.Item label="Decision" value="dec" />
                       <Picker.Item label="Draw" value="draw" />
@@ -207,7 +220,7 @@ class SelectWinnerContainer extends Component {
                 </Col>
               </Row>
             </Body>
-            </CardItem>              
+            </CardItem>
           </Card>;
   }
 
@@ -276,7 +289,7 @@ class SelectWinnerContainer extends Component {
     return <Container>
           {this.renderHeader()}
           <Content>
-            <MatchCardComponent data={{...matchDetail}} />
+            <MatchCardComponent data={{...matchDetail}} wallpaper={true} />
             {this.renderResult(matchDetail)}
             {this.renderAttachments()}
             {this.renderFooter()}
