@@ -196,6 +196,7 @@ class SelectWinnerContainer extends Component {
                       header="Select a Winner" mode="dropdown" 
                       selectedValue={this.props.selectWinner.winner}
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
+                      itemStyle={{margin:10}}
                       onValueChange={this.onWinnerChangedValue.bind(this)}>
                       <Picker.Item label="Select a Winner" value={null} />
                       <Picker.Item label={matchDetail.athlete_one_data.name} value={matchDetail.athlete_one_data.user_id} />
@@ -210,6 +211,7 @@ class SelectWinnerContainer extends Component {
                     <Picker placeholder="Win Type" header="Select Win Type" mode="dropdown" 
                       selectedValue={this.props.selectWinner.win_type}
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
+                      itemStyle={{margin:10}}
                       onValueChange={this.onWinnerTypeChangedValue.bind(this)}>
                       <Picker.Item label="Select Win Type" value={null} />
                       <Picker.Item label="KO" value="ko/tko" />

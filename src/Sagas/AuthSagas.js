@@ -117,14 +117,14 @@ export function* sendPasswordResetCode(action) {
   const response = yield call(api.sendPasswordResetCode, action.payload);
 
   const payload = response.data;
-  const {error, message} = payload;
+  const {errors} = payload;
 
   if (response.ok) {
     // do data conversion here if needed
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_SUCCESS, payload });
     // yield put(NavigationActions.navigate({ routeName: 'login' }));
   } else {
-    alert(message || error);
+    alert(errors.email[0]);    
     // const payload = showErrorsAndReturnPayload(response);
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_FAIL, payload });
   }
