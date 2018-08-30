@@ -20,6 +20,7 @@ import {
 } from "../Actions";
 
 import styles from "../styles";
+import LoadingComponent from '../Components/LoadingComponent';
 
 class RoundComponent extends Component {
 
@@ -42,12 +43,15 @@ class RoundComponent extends Component {
 
   render() {
     const { index, matchDetail, resultRounds} = this.props;
-    const { rounds } = resultRounds;    
-
+    const { rounds } = resultRounds;
+    if (!rounds[index][matchDetail.athlete_one_data.user_id]) {
+       <LoadingComponent />
+    }
+    
     return <Card>
     <CardItem header bordered>
       <Left style={{ marginLeft: -10}}>
-        <Text>Round - { index +1}</Text>
+        <Text style={{fontWeight:'bold'}}>Round - { index +1}</Text>
       </Left>
       <Right>
         <Icon name="ios-close-circle-outline" style={{color: "#000"}} onPress={() => this.onPressRemoveRound(index)} style={{ paddingLeft: 20}} />
@@ -57,7 +61,7 @@ class RoundComponent extends Component {
       <Body>
         <Row style={style.player}>
           <Col>
-            <Text>{matchDetail.athlete_one_data.name}</Text>
+            <Text style={{fontWeight:'bold'}}>{matchDetail.athlete_one_data.name}</Text>
           </Col>
         </Row>
         <Row>
@@ -68,7 +72,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Control" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'control')} 
-                value={rounds[index][matchDetail.athlete_one_data.user_id]['control']} 
+                //value={rounds[index][matchDetail.athlete_one_data.user_id]['control']} 
                 />
             </Item>
           </Col>
@@ -79,7 +83,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Knockdowns" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'knock_downs')} 
-                value={rounds[index][matchDetail.athlete_one_data.user_id]['knock_downs']} 
+                //value={rounds[index][matchDetail.athlete_one_data.user_id]['knock_downs']} 
                 />
             </Item>
           </Col>
@@ -92,7 +96,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Total Strikes" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'total_strike')} 
-                value={rounds[index][matchDetail.athlete_one_data.user_id]['total_strike']} 
+                //value={rounds[index][matchDetail.athlete_one_data.user_id]['total_strike']} 
                 // value={this.props.total_strike} 
                 />
             </Item>
@@ -104,7 +108,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Significant Strikes"
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'significant_strike')} 
-                value={rounds[index][matchDetail.athlete_one_data.user_id]['significant_strike']} 
+                //value={rounds[index][matchDetail.athlete_one_data.user_id]['significant_strike']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -118,7 +122,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Take Downs" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'take_downs')} 
-                value={rounds[index][matchDetail.athlete_one_data.user_id]['take_downs']} 
+                //value={rounds[index][matchDetail.athlete_one_data.user_id]['take_downs']} 
                 // value={this.props.take_downs} 
                 />
             </Item>
@@ -130,7 +134,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Sub Attempts" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_one_data.user_id, 'sub_attempts')} 
-                value={rounds[index][matchDetail.athlete_one_data.user_id]['sub_attempts']} 
+                //value={rounds[index][matchDetail.athlete_one_data.user_id]['sub_attempts']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -143,7 +147,7 @@ class RoundComponent extends Component {
     <Body>
         <Row style={style.player}>
           <Col>
-            <Text>{matchDetail.athlete_two_data.name}</Text>
+            <Text style={{fontWeight:'bold'}}>{matchDetail.athlete_two_data.name}</Text>
           </Col>
         </Row>
         <Row>
@@ -154,7 +158,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Control" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'control')} 
-                value={rounds[index][matchDetail.athlete_two_data.user_id]['control']} 
+                //value={rounds[index][matchDetail.athlete_two_data.user_id]['control']} 
                 />
             </Item>
           </Col>
@@ -165,7 +169,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Knockdowns" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'knock_downs')} 
-                value={rounds[index][matchDetail.athlete_two_data.user_id]['knock_downs']} 
+                //value={rounds[index][matchDetail.athlete_two_data.user_id]['knock_downs']} 
                 />
             </Item>
           </Col>
@@ -178,7 +182,7 @@ class RoundComponent extends Component {
                 keyboardType="numeric"
                 returnKeyType = {"next"}
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'total_strike')} 
-                value={rounds[index][matchDetail.athlete_two_data.user_id]['total_strike']} 
+                //value={rounds[index][matchDetail.athlete_two_data.user_id]['total_strike']} 
                 // value={this.props.total_strike} 
                 />
             </Item>
@@ -189,7 +193,7 @@ class RoundComponent extends Component {
                 keyboardType="numeric"
                 placeholder="Significant Strikes" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'significant_strike')} 
-                value={rounds[index][matchDetail.athlete_two_data.user_id]['significant_strike']} 
+                //value={rounds[index][matchDetail.athlete_two_data.user_id]['significant_strike']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>
@@ -203,7 +207,7 @@ class RoundComponent extends Component {
                 returnKeyType = {"next"}
                 placeholder="Take Downs" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'take_downs')} 
-                value={rounds[index][matchDetail.athlete_two_data.user_id]['take_downs']} 
+                //value={rounds[index][matchDetail.athlete_two_data.user_id]['take_downs']} 
                 // value={this.props.take_downs} 
                 />
             </Item>
@@ -215,7 +219,7 @@ class RoundComponent extends Component {
                 returnKeyType={'done'}
                 placeholder="Sub Attempts" 
                 onChangeText={(text) => this.onRoundUpdate(text, index, matchDetail.athlete_two_data.user_id, 'sub_attempts')} 
-                value={rounds[index][matchDetail.athlete_two_data.user_id]['sub_attempts']} 
+                //value={rounds[index][matchDetail.athlete_two_data.user_id]['sub_attempts']} 
                   // value={this.props.significant_strike} 
                   />
             </Item>

@@ -33,7 +33,8 @@ export function* loginUser(action) {
   } else {
     // const payload = showErrorsAndReturnPayload(response);
     const payload = response.data;
-    alert(payload.message);
+    // alert(payload.message);
+    alert('The user credentials were incorrect.');
     yield put({ type: CONSTANTS.LOGIN_USER_FAIL, payload });
   }
 }

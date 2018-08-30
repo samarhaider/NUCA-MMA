@@ -29,26 +29,21 @@ class MatchCardComponent extends Component {
 
   renderSimpleCardBody() {
     const { data } =  this.props;
-    let profile_picture1 = uri;
-    let profile_picture2 = uri;
-    if ( data.athlete_one_data.picture ) {
-      profile_picture1 = `${S3_BASE_URL}${data.athlete_one_data.picture}`;
-    }
-    if ( data.athlete_two_data.picture ) {
-      profile_picture2 = `${S3_BASE_URL}${data.athlete_two_data.picture}`;
-    }    return (<Row>
+    const profile_picture1 = data.athlete_one_data.picture || uri;
+    const profile_picture2 = data.athlete_two_data.picture || uri;
+    return (<Row>
       <Col size={40} style={style.player}  >
         <Thumbnail large source={{uri: profile_picture1}} style={style.thumbnail} />
-        <Text>{data.athlete_one_data.name}</Text>
-        <Text note>{data.athlete_one_data.address}</Text>
+        <Text style={{fontWeight:'bold'}}>{data.athlete_one_data.name}</Text>
+        <Text note>{data.school_one_data.name}</Text>
       </Col>
       <Col size={20} style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }} >
         <Text style={styles.vs} >VS</Text>
       </Col>
       <Col size={40} style={style.player} >
         <Thumbnail large source={{uri: profile_picture2}} style={style.thumbnail} />
-        <Text>{data.athlete_two_data.name}</Text>
-        <Text note>{data.athlete_two_data.address}</Text>
+        <Text style={{fontWeight:'bold'}}>{data.athlete_two_data.name}</Text>
+        <Text note>{data.school_two_data.name}</Text>
       </Col>
     </Row>);
   }
