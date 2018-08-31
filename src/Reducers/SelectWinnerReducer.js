@@ -27,6 +27,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.ROUND_SET_INITIAL:
+      return {...INITIAL_STATE};
     case CONSTANTS.WINNER_CHANGED:
       return {...state, winner: action.payload};
     case CONSTANTS.WIN_TYPE_CHANGED:
