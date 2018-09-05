@@ -127,25 +127,36 @@ class ResultAddContainer extends Component {
     </Footer>);
   }
 
-  render() {
+  renderContent() {
     const { resultRounds } = this.props;
     const { match } = this.props.navigation.state.params;
-    const extraHeight = Platform.OS === 'ios' ? 0 : 150;
+    return (
+      <Content>
+        <MatchCardComponent data={{...match}} wallpaper={true} />
+          {resultRounds.rounds.map((data,i) => {
+            return <RoundComponent key={i} index={i} data={data} />
+          })}
+        {this.renderFooter()}
+      </Content>)
+  }
+
+  renderBody() {
+    if (Platform.OS === 'ios') {
+      return this.renderContent()
+    }
+    return (<KeyboardAwareScrollView
+      extraHeight="150"
+      enableOnAndroid={true} 
+      keyboardShouldPersistTaps='handled'
+    >
+    {this.renderContent()}
+    </KeyboardAwareScrollView>)
+  }
+
+  render() {
     return <Container>
             {this.renderHeader()}
-            <KeyboardAwareScrollView
-              extraHeight={extraHeight}
-              enableOnAndroid={true} 
-              keyboardShouldPersistTaps='handled'
-            >
-              <Content>
-                <MatchCardComponent data={{...match}} wallpaper={true} />
-                  {resultRounds.rounds.map((data,i) => {
-                    return <RoundComponent key={i} index={i} data={data} />
-                  })}
-                {this.renderFooter()}
-              </Content>
-            </KeyboardAwareScrollView>
+            {this.renderBody()}
           </Container>;
   }
 }
