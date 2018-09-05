@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { BackHandler } from 'react-native';
+import { BackHandler, Platform } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import {
   Container,
@@ -130,10 +130,11 @@ class ResultAddContainer extends Component {
   render() {
     const { resultRounds } = this.props;
     const { match } = this.props.navigation.state.params;
+    const extraHeight = Platform.OS === 'ios' ? 0 : 150;
     return <Container>
             {this.renderHeader()}
             <KeyboardAwareScrollView
-              extraHeight={300}
+              extraHeight={extraHeight}
               enableOnAndroid={true} 
               keyboardShouldPersistTaps='handled'
             >

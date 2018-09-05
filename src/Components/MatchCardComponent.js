@@ -64,7 +64,7 @@ class MatchCardComponent extends Component {
 
   render() {
     const { data } =  this.props;
-    return <Card>
+    return <Card style={{flexWrap: 'nowrap'}}>
     <CardItem header bordered>
       <Body>
         <Text>{this.getDayName(data.schedule.start_time)}</Text>

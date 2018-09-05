@@ -180,7 +180,7 @@ class SelectWinnerContainer extends Component {
   }
 
   renderResult(matchDetail) {
-    return <Card>
+    return <Card style={{flexWrap: 'nowrap'}}>
             <CardItem header>
               <Left>
                 <Text>Result</Text>
