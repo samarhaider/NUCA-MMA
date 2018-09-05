@@ -86,7 +86,9 @@ class SelectWinnerContainer extends Component {
     if (buttonIndex == 0) {
 
       const { status } = await Permissions.askAsync(Permissions.CAMERA);
-      if (status === 'granted') {
+      const cameraRoll = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      
+      if (status === 'granted' && cameraRoll.status === 'granted') {
         result = await ImagePicker.launchCameraAsync({
           // allowsEditing: true,
           aspect: [4, 3]
