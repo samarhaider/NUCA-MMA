@@ -145,7 +145,7 @@ class ResultAddContainer extends Component {
       return this.renderContent()
     }
     return (<KeyboardAwareScrollView
-      extraHeight="150"
+      extraHeight={150}
       enableOnAndroid={true} 
       keyboardShouldPersistTaps='handled'
     >
