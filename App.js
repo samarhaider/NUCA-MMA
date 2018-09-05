@@ -47,7 +47,7 @@ export default class App extends React.Component {
     const token = await AsyncStorage.getItem(CONSTANTS.STORAGE_KEY);
     const imageAssets = cacheImages([
       require('./assets/bg.png'),
-      require('./assets/icon.png'),
+      require('./assets/logo.png'),
     ]);    
     const fontAssets = cacheFonts([FontAwesome.font]);
     await Promise.all([...imageAssets, ...fontAssets]);

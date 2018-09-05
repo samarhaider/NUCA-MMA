@@ -182,6 +182,29 @@ class SelectWinnerContainer extends Component {
   }
 
   renderResult(matchDetail) {
+    let items = [];
+    if (Platform.OS !== 'ios') {
+      items.push({label: "Select a Winner", value: null})
+    }
+    items.push({label: matchDetail.athlete_one_data.name, value: matchDetail.athlete_one_data.user_id})
+    items.push({label: matchDetail.athlete_two_data.name, value: matchDetail.athlete_two_data.user_id})
+
+    let serviceItems = items.map( (item, i) => {
+      return <Picker.Item key={i} value={item.value} label={item.label} />
+    });
+
+    let itemsWinType = [];
+    if (Platform.OS !== 'ios') {
+      itemsWinType.push({label: "Select Win Type", value: null})
+    }
+    itemsWinType.push({label: "KO", value: "ko/tko"})
+    itemsWinType.push({label: "Decision", value: "dec"})
+    itemsWinType.push({label: "Draw", value: "draw"})
+
+    let serviceItemsWinType = itemsWinType.map( (item, i) => {
+      return <Picker.Item key={i} value={item.value} label={item.label} />
+    });
+
     return <Card style={{flexWrap: 'nowrap'}}>
             <CardItem header>
               <Left>
@@ -200,9 +223,7 @@ class SelectWinnerContainer extends Component {
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
                       itemStyle={{margin:10}}
                       onValueChange={this.onWinnerChangedValue.bind(this)}>
-                      <Picker.Item label="Select a Winner" value={null} />
-                      <Picker.Item label={matchDetail.athlete_one_data.name} value={matchDetail.athlete_one_data.user_id} />
-                      <Picker.Item label={matchDetail.athlete_two_data.name} value={matchDetail.athlete_two_data.user_id} />
+                      {serviceItems}
                     </Picker>
                   </Item>
                 </Col>
@@ -215,10 +236,7 @@ class SelectWinnerContainer extends Component {
                       style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
                       itemStyle={{margin:10}}
                       onValueChange={this.onWinnerTypeChangedValue.bind(this)}>
-                      <Picker.Item label="Select Win Type" value={null} />
-                      <Picker.Item label="KO" value="ko/tko" />
-                      <Picker.Item label="Decision" value="dec" />
-                      <Picker.Item label="Draw" value="draw" />
+                      {serviceItemsWinType}
                     </Picker>
                   </Item>
                 </Col>

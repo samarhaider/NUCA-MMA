@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {StyleSheet, Image} from 'react-native';
 import { Text, View } from "native-base";
 
-import logoImg from '../../assets/icon.png';
+import logoImg from '../../assets/logo.png';
 
 export default class Logo extends Component {
 
