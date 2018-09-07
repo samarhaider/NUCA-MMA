@@ -48,7 +48,7 @@ class RoundComponent extends Component {
        <LoadingComponent />
     }
     
-    return <Card>
+    return <Card style={{flexWrap: 'nowrap'}}>
     <CardItem header bordered>
       <Left style={{ marginLeft: -10}}>
         <Text style={{fontWeight:'bold'}}>Round - { index +1}</Text>
