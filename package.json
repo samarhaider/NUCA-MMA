@@ -34,6 +34,7 @@
     "react-native": "0.55.0",
     "react-native-keyboard-aware-scroll-view": "^0.7.1",
     "react-native-modalbox": "^1.6.0",
+    "react-native-picker-select": "^5.0.1",
     "react-navigation": "1.0.0-beta.27",
     "react-navigation-redux-helpers": "^1.0.1",
     "react-redux": "^5.0.6",

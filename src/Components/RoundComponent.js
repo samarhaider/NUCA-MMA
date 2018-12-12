@@ -17,6 +17,7 @@ import {
 import {
   removeRound,
   resultChanged,
+  roundErrorSet,
 } from "../Actions";
 
 import styles from "../styles";
@@ -27,10 +28,15 @@ class RoundComponent extends Component {
   onPressRemoveRound = (index) => {
     const { resultRounds } = this.props;
     const {rounds} = resultRounds;
-    if (rounds.length > 1) {
-      this.props.dispatch(removeRound(index));
+    if (rounds.length == 1) {
+      // alert('You have to add atleast one round');
+      this.props.dispatch(roundErrorSet('You have to add atleast one round'));
+    } else if (rounds.length-1 != index) {
+      this.props.dispatch(roundErrorSet('You have to delete last round first'));
+      // alert('You have to delete last round first');
     } else {
-      alert('You have to add atleast one round');
+      // this.props.dispatch(removeRound(index));
+      this.props.removeRound(index);
     }
   }
 

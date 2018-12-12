@@ -6,8 +6,8 @@ const INITIAL_STATE = {
   client_id: 2,
   client_secret: 'rLZHSvoujOhm1OQiDJiInnsP25YXlrYoKJJJ9nve',
   username: "",
-  // password: "dummy",
-  // email: "eino41@example.net",
+  // password: "test@123123",
+  // email: "jon@snow.com",
   password: "",
   email: "",
   modalSuccess: false,
@@ -20,6 +20,8 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.AUTH_ERROR_EMPTY:
+      return { ...state, error: '' };
     case CONSTANTS.USERNAME_CHANGED:
       return { ...state, username: action.payload };
     case CONSTANTS.EMAIL_CHANGED:

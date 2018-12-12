@@ -123,6 +123,12 @@ export const resendVerificationCode = payload => {
   };
 };
 
+export const authErrorEmpty = () => {
+  return {
+    type:  CONSTANTS.AUTH_ERROR_EMPTY    
+  };
+};
+
 export const goRegisterScene = () => {
   // Actions.register();
 };

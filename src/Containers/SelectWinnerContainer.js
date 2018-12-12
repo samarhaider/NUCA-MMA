@@ -28,6 +28,7 @@ import {
 } from "native-base";
 import Modal from 'react-native-modalbox';
 import { connectActionSheet } from '@expo/react-native-action-sheet';
+import RNPickerSelect from 'react-native-picker-select';
 import {
   winnerImageAdd,
   winnerImageRemove,
@@ -37,7 +38,11 @@ import {
   modalSuccessResultSubmit,
 } from '../Actions';
 import styles from "../styles";
-import MatchCardComponent from '../Components/MatchCardComponent'
+import MatchCardComponent from '../Components/MatchCardComponent';
+import LoadingComponent from "../Components/LoadingComponent";
+import validateRules, {
+  selectWinnerValidation
+} from "../Components/ValidationRules";
 
 var BUTTONS = ["From Camera", "From	Gallery", "Cancel"];
 var CANCEL_INDEX = 2;
@@ -47,10 +52,13 @@ class SelectWinnerContainer extends Component {
 
   constructor(props) {
     super(props)
+    this.inputRefs = {};
+    this.inputRefsWinType = {};
     this.handleBackButtonClick = this.handleBackButtonClick.bind(this);
   }
 
   componentWillMount() {
+    this.setState({showNextScreen: true, showLoader: true});
     BackHandler.addEventListener('hardwareBackPress', this.handleBackButtonClick);
   }
 
@@ -65,11 +73,21 @@ class SelectWinnerContainer extends Component {
   
   componentDidMount() {
     this.props.dispatch(modalSuccessResultSubmit(false))
+    this.setState({error: ""});
+    setTimeout(()=>{
+      this.setState({
+        showLoader: false,
+      });
+    }, 1000);
   }
 
   closeModal = () => {
     this.props.dispatch(modalSuccessResultSubmit(false))
     this.props.navigation.navigate("home");
+  }
+
+  closeErrorModal = () => {
+    this.setState({error: ""});
   }
 
   onWinnerChangedValue = payload => {
@@ -94,7 +112,8 @@ class SelectWinnerContainer extends Component {
           aspect: [4, 3]
         });
       } else {
-        alert('Camera to access was denied');        
+        this.setState({error: 'Camera to access was denied'});
+        // alert('Camera to access was denied');
       }
     } else if (buttonIndex == 1) {
       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);    
@@ -105,7 +124,8 @@ class SelectWinnerContainer extends Component {
           aspect: [4, 3]
         });
       } else {
-        alert('Gallery to access was denied');        
+        this.setState({error: 'Gallery to access was denied'});
+        // alert('Gallery to access was denied');
       }
     }
     if (!result.cancelled) {
@@ -119,6 +139,16 @@ class SelectWinnerContainer extends Component {
 
   submitResultPress = () => {
     const { resultRounds, selectWinner, matchDetail } = this.props;
+    const errors = validateRules(selectWinner, selectWinnerValidation);
+    if (errors) {
+      let errorString = '';
+      for( error in errors) {          
+        errorString += errors[error][0];
+        break;
+      }
+      this.setState({error: errorString});
+      return;
+    }
     const { rounds } = resultRounds;
     const result = {
       rounds, ...selectWinner, id: matchDetail.id,
@@ -150,21 +180,41 @@ class SelectWinnerContainer extends Component {
       //   }
       // )
     } else {
-      alert(`You cannot add more than ${imagesLimit} images`);
+      this.setState({error: `You cannot add more than ${imagesLimit} images`});
+      // alert(`You cannot add more than ${imagesLimit} images`);
     }
 
   }
 
   renderModalSuccess () {
-    return (<Modal style={styles.modal} isOpen={this.props.selectWinner.modalSuccess} onClosed={() => this.closeModal()}>
-    <Col>
-      <SimpleLineIcons name="check" size={80} color="#848484" />
-    </Col>
-      <H1 style={styles.successText}>Successful!</H1>
-    <Col>
-      <Text style={styles.modalText}>Your result has been successfully added.</Text>
-    </Col>
-  </Modal>);
+    return (<Modal style={styles.modal} isOpen={this.props.selectWinner.modalSuccess} backdropPressToClose={false}>
+        <SimpleLineIcons name="check" size={80} color="#848484" />
+        {/* <H1 style={styles.successText}>Successful!</H1> */}
+        <Text style={styles.modalText}>Your result has been successfully added.</Text>
+      <Col style={styles.modelButtonEnd} >
+        <Button onPress={() => this.closeModal()}>
+          <Text style={{}}>OK</Text>
+        </Button>
+      </Col>
+    </Modal>);
+  }
+
+  renderModalError () {
+    // if (this.props.error) {
+    //   this.setState({error: this.props.error});
+    // }
+    if (!this.state.error) {
+      return;
+    }
+    return (<Modal style={styles.modalError} isOpen={true} backdropPressToClose={false} onClosed={() => this.closeErrorModal()}>
+        <H1 style={styles.modalErrorHeader}>Alert</H1>
+        <Text style={styles.modalText}>{this.state.error}</Text>
+        <Col style={styles.modelButtonEnd} >
+          <Button style={styles.modalErrorButton} onPress={() => this.closeErrorModal()}>
+            <Text style={styles.modalTextError}>OK</Text>
+          </Button>
+        </Col>
+    </Modal>);
   }
 
   renderHeader() {
@@ -181,7 +231,8 @@ class SelectWinnerContainer extends Component {
   </Header>;
   }
 
-  renderResult(matchDetail) {
+  renderSelectWinnerDropdown(matchDetail) {
+
     let items = [];
     if (Platform.OS !== 'ios') {
       items.push({label: "Select a Winner", value: null})
@@ -189,10 +240,47 @@ class SelectWinnerContainer extends Component {
     items.push({label: matchDetail.athlete_one_data.name, value: matchDetail.athlete_one_data.user_id})
     items.push({label: matchDetail.athlete_two_data.name, value: matchDetail.athlete_two_data.user_id})
 
+    if (Platform.OS === 'ios') {
+      return (<RNPickerSelect
+        placeholder={{
+            label: 'Select a Winner',
+            value: null,
+        }}
+        items={items}
+        onValueChange={this.onWinnerChangedValue.bind(this)}
+        onUpArrow={() => {
+            this.inputRefs.name.focus();
+        }}
+        onDownArrow={() => {
+            this.inputRefs.picker2.togglePicker();
+        }}
+        style={{ ...pickerSelectStyles }}
+        value={this.props.selectWinner.winner}
+        ref={(el) => {
+            this.inputRefs.picker = el;
+        }}
+    />);
+    }
+
     let serviceItems = items.map( (item, i) => {
       return <Picker.Item key={i} value={item.value} label={item.label} />
     });
 
+    return (<Item>
+      <Picker 
+        placeholder="Select a Winner"
+        header="Select a Winner" mode="dropdown" 
+        selectedValue={this.props.selectWinner.winner}
+        style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
+        itemStyle={{margin:10}}
+        onValueChange={this.onWinnerChangedValue.bind(this)}>
+        {serviceItems}
+      </Picker>
+    </Item>);
+
+  }
+
+  renderSelectWinTypeDropdown() {
     let itemsWinType = [];
     if (Platform.OS !== 'ios') {
       itemsWinType.push({label: "Select Win Type", value: null})
@@ -201,10 +289,46 @@ class SelectWinnerContainer extends Component {
     itemsWinType.push({label: "Decision", value: "dec"})
     itemsWinType.push({label: "Draw", value: "draw"})
 
+    if (Platform.OS === 'ios') {
+      return(<RNPickerSelect
+                placeholder={{
+                    label: 'Select Win Type',
+                    value: null,
+                }}
+                items={itemsWinType}
+                onValueChange={this.onWinnerTypeChangedValue.bind(this)}
+                onUpArrow={() => {
+                    this.inputRefsWinType.name.focus();
+                }}
+                onDownArrow={() => {
+                    this.inputRefsWinType.picker2.togglePicker();
+                }}
+                style={{ ...pickerSelectStyles }}
+                value={this.props.selectWinner.win_type}
+                ref={(el) => {
+                    this.inputRefsWinType.picker = el;
+                }}
+            />
+      );
+    }
+
     let serviceItemsWinType = itemsWinType.map( (item, i) => {
       return <Picker.Item key={i} value={item.value} label={item.label} />
     });
 
+    return (<Item>
+              <Picker placeholder="Win Type" header="Select Win Type" mode="dropdown" 
+                selectedValue={this.props.selectWinner.win_type}
+                style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
+                itemStyle={{margin:10}}
+                onValueChange={this.onWinnerTypeChangedValue.bind(this)}>
+                {serviceItemsWinType}
+              </Picker>
+            </Item>);
+  }
+
+
+  renderResult(matchDetail) {
     return <Card style={{flexWrap: 'nowrap'}}>
             <CardItem header>
               <Left>
@@ -215,30 +339,12 @@ class SelectWinnerContainer extends Component {
             <Body>
               <Row>
                 <Col>
-                  <Item>
-                    <Picker 
-                      placeholder="Select a Winner"
-                      header="Select a Winner" mode="dropdown" 
-                      selectedValue={this.props.selectWinner.winner}
-                      style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
-                      itemStyle={{margin:10}}
-                      onValueChange={this.onWinnerChangedValue.bind(this)}>
-                      {serviceItems}
-                    </Picker>
-                  </Item>
+                {this.renderSelectWinnerDropdown(matchDetail)}                  
                 </Col>
               </Row>
               <Row>
                 <Col>
-                  <Item>
-                    <Picker placeholder="Win Type" header="Select Win Type" mode="dropdown" 
-                      selectedValue={this.props.selectWinner.win_type}
-                      style={{ width:(Platform.OS === 'ios') ? undefined : '100%' }}
-                      itemStyle={{margin:10}}
-                      onValueChange={this.onWinnerTypeChangedValue.bind(this)}>
-                      {serviceItemsWinType}
-                    </Picker>
-                  </Item>
+                {this.renderSelectWinTypeDropdown()}                  
                 </Col>
               </Row>
             </Body>
@@ -295,7 +401,7 @@ class SelectWinnerContainer extends Component {
   }
 
   renderFooter() {
-    return <Footer>
+    return <Footer style={{marginTop: 70}}>
       <FooterTab>
         <Row>
           <Col>
@@ -306,23 +412,49 @@ class SelectWinnerContainer extends Component {
     </Footer>;
   }
 
-  render() {
+  renderBody() {
+    if (this.state.showLoader) {
+      return <LoadingComponent />;
+    }
     const { matchDetail } = this.props;
+    return (<Content>
+      <MatchCardComponent data={{...matchDetail}} wallpaper={true} />
+      {this.renderResult(matchDetail)}
+      {this.renderAttachments()}
+      {this.renderFooter()}
+    </Content>);
+  }
+
+  render() {
     return <Container>
           {this.renderHeader()}
-          <Content>
-            <MatchCardComponent data={{...matchDetail}} wallpaper={true} />
-            {this.renderResult(matchDetail)}
-            {this.renderAttachments()}
-            {this.renderFooter()}
-          </Content>
+          {this.renderBody()}
           {this.renderModalSuccess()}
+          {this.renderModalError()}
         </Container>;
   }
 }
 
 const mapStateToProps = ({ selectWinner, matchDetail, resultRounds }) => {
   return { selectWinner, matchDetail, resultRounds };
+};
+
+const pickerSelectStyles = {
+  inputIOS: {
+      fontSize: 16,
+      paddingTop: 13,
+      paddingHorizontal: 10,
+      paddingBottom: 12,
+      borderWidth: 1,
+      borderColor: '#E8E8E8',
+      backgroundColor: 'white',
+      color: 'black',
+      width: '100%',
+      marginBottom: 20,
+      borderRadius: 5, // Added
+      paddingLeft: 5, // Added
+  
+  },
 };
 
 export default connect(mapStateToProps)(SelectWinnerContainer);

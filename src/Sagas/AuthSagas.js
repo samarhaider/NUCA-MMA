@@ -32,9 +32,10 @@ export function* loginUser(action) {
       );
   } else {
     // const payload = showErrorsAndReturnPayload(response);
-    const payload = response.data;
+    // const payload = response;
     // alert(payload.message);
-    alert('The user credentials were incorrect.');
+    const payload = 'The user credentials were incorrect.';
+    // alert('The user credentials were incorrect.');
     yield put({ type: CONSTANTS.LOGIN_USER_FAIL, payload });
   }
 }
@@ -124,8 +125,9 @@ export function* sendPasswordResetCode(action) {
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_SUCCESS, payload });
     // yield put(NavigationActions.navigate({ routeName: 'login' }));
   } else {
-    alert(errors.email[0]);    
+    // alert(errors.email[0]);
     // const payload = showErrorsAndReturnPayload(response);
+    const payload = errors.email[0];
     yield put({ type: CONSTANTS.SEND_PASSWORD_RESET_CODE_FAIL, payload });
   }
 }

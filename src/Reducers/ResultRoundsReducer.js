@@ -14,6 +14,10 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
+    case CONSTANTS.ROUND_ERROR_EMPTY:
+      return { ...state, error: '' };
+    case CONSTANTS.ROUND_ERROR_SET:
+      return { ...state, error: action.payload };
     case CONSTANTS.ROUND_SET_INITIAL:
       return {...INITIAL_STATE};
     case CONSTANTS.ROUND_ADD:

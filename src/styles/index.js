@@ -16,13 +16,32 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 40,
-    paddingLeft: 10,
+    // paddingLeft: 10,
     height: 250,
     width: 300,
     // backgroundColor: "#3B5998"
   },
+  modalError: {
+    alignItems: 'center',
+    // paddingLeft: 10,
+    height: 250,
+    width: 300,
+    // backgroundColor: "#3B5998"
+  },
+  modalErrorHeader: {
+    color: "#FFF",
+    paddingVertical: 10,
+    backgroundColor: "#da0011",
+    width: '100%',
+    textAlign: 'center',
+    marginBottom: 30,
+
+  },
+  modalTextError: {color: "#FFF"},
+  modalErrorButton: {backgroundColor: "#000", paddingHorizontal: 30, marginTop: 50,},
   successText: { color: "#da0011", marginTop: 15,},
-  modalText: {color: "#848484", textAlign: 'center', paddingHorizontal: 30,},
+  modalText: {color: "#848484", textAlign: 'center', paddingHorizontal: 10,},
+  modelButtonEnd: {alignItems: 'center', marginBottom: 20, justifyContent: 'flex-end'},
   timerRow: {
     marginTop: -12,
     marginLeft: -16,

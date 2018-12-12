@@ -77,7 +77,7 @@ import { store } from '../../App';
     const getPostDetail = (QueryString = {}) => api.get(`favors/${QueryString.id}`, QueryString);
     const saveMatch = (data = {}) => {
       let form_data = new FormData();
-      form_data.append('_method', 'put');      
+      form_data.append('_method', 'put');
       for ( let key in data ) {
           if (key == 'rounds' ) {
             for ( let index in data['rounds']) {

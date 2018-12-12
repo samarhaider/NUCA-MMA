@@ -10,9 +10,9 @@ export default function validateRules(
   // options = { format: "flat" }
 ) {
   const errors = validate(fields, rules, options);
-  if (errors) {
-    showErrors(errors);
-  }
+  // if (errors) {
+  //   showErrors(errors);
+  // }
   return errors;
 }
 
@@ -81,122 +81,38 @@ export function showErrorsAndReturnPayload(response) {
 //     <Text style={[styles.text, { color: "white" }]}>errorString</Text>
 //   </Modal>;
 // }
-const phoneRegix = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;
-export const loginValidation = {
-  // phone: {
-  //   presence: {
-  //     message: "^Please enter an phone"
-  //   },
-  //   format: {
-  //     pattern: phoneRegix,
-  //     message: '^Please enter a valid phone'
-  //   }
-  // },
-  // password: {
-  //   presence: true,
-  //   // presence: {
-  //   //   message: '^Please enter a password'
-  //   // },
-  //   length: {
-  //     minimum: 5,
-  //     message: "must be at least 5 characters"
-  //   }
-  // }
-};
 
-export const registerValidation = {
-  firstname: {
-    presence: {
-      message: "^Please enter an first name"
-    }
+const addRoundObj  = {
+  presence: { 
+    allowEmpty: false
   },
-  lastname: {
-    presence: {
-      message: "^Please enter an last name"
-    }
-  },
-  phone: {
-    presence: {
-      message: "^Please enter an phone"
-    },
-    format: {
-      pattern: phoneRegix,
-      message: '^Please enter a valid phone'
-    }
-  },
-
-  email: {
-    presence: {
-      message: "^Please enter an email address"
-    },
-    format: {
-      pattern: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-      message: "^Please enter a valid email address"
-    }
-  },
-
-  password: {
-    presence: {
-      message: "^Please enter a password"
-    },
-    length: {
-      minimum: 5,
-      message: "^Your password must be at least 5 characters"
-    }
-  },
-  password_confirmation: {
-    presence: {
-      message: "^Please enter a confirmconfirm password"
-    },
-    equality: "password"
+  numericality: {
+    onlyInteger: true,
+    greaterThanOrEqualTo: 0,
+    lessThan: 100,
   }
 };
 
-export const sendCodeValidation = {
-  //  phone: {
-  //   presence: {
-  //     message: "^Please enter an phone"
-  //   },
-  //   format: {
-  //     pattern: phoneRegix,
-  //     message: '^Please enter a valid phone'
-  //   }
-  // },
+export const addRoundValidation = {
+  control: addRoundObj,
+  knock_downs: addRoundObj,
+  total_strike: addRoundObj,
+  significant_strike: addRoundObj,
+  take_downs: addRoundObj,
+  sub_attempts: addRoundObj,
 };
 
-export const resetPasswordValidation = {
-  // code: {
-  //   presence: true,
-  //   length: {
-  //     is: 4,
-  //     message: "must be 4 characters"
-  //   }
-  // },
-  // password: {
-  //   presence: {
-  //     message: "^Please enter a password"
-  //   },
-  //   length: {
-  //     minimum: 5,
-  //     message: "^Your password must be at least 5 characters"
-  //   }
-  // },
-  // password_confirmation: {
-  //   presence: {
-  //     message: "^Please enter a confirmconfirm password"
-  //   },
-  //   equality: "password"
-  // }
-};
-
-export const addFavour = {
-  ttile: {
-    presence: true,
+export const selectWinnerValidation = {
+  winner: {
+    presence: { 
+      allowEmpty: false,
+      message: "^Please select Winner",
+    },
   },
-  description: {
-    presence: true,
-  },
-  points: {
-    presence: true,
-  },
+  win_type: {
+    presence: { 
+      allowEmpty: false,
+      message: "^Please select Win Type",
+    },
+  }
 };

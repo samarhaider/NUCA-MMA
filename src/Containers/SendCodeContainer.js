@@ -21,10 +21,8 @@ import {
   Col,
 } from "native-base";
 import Modal from 'react-native-modalbox';
-import { emailChanged, sendPasswordResetCode, modalSuccessPasswordResetCode } from "../Actions";
+import { emailChanged, sendPasswordResetCode, modalSuccessPasswordResetCode, authErrorEmpty } from "../Actions";
 import styles from "../styles";
-import getTheme from "../../native-base-theme/components";
-import commonColor from "../../native-base-theme/variables/commonColor";
 import validateRules, {
   sendCodeValidation
 } from "../Components/ValidationRules";
@@ -54,7 +52,7 @@ class SendCodeContainer extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(modalSuccessPasswordResetCode(false))
+    // this.props.dispatch(modalSuccessPasswordResetCode(false))
   }
 
   closeModal = () => {
@@ -72,7 +70,12 @@ class SendCodeContainer extends Component {
   }
   onemailChanged = (text) => {
     this.props.dispatch(emailChanged(text));
-  }  
+  }
+
+  errorCloseModal = () => {
+    this.props.dispatch(authErrorEmpty());
+  }
+
   renderSubmitButton() {
     if (this.props.loading) {
       return <Button full>
@@ -99,6 +102,21 @@ class SendCodeContainer extends Component {
       <Text style={styles.modalText}>We have sent a password reset link to your email address</Text>
     </Col>
   </Modal>);
+  }
+
+  renderModalError () {
+    if (!this.props.error) {
+      return;
+    }
+    return (<Modal style={styles.modalError} isOpen={true} backdropPressToClose={false} onClosed={() => this.closeModal()}>
+        <H1 style={styles.modalErrorHeader}>Alert</H1>
+        <Text style={styles.modalText}>{this.props.error}</Text>
+        <Col style={styles.modelButtonEnd} >
+          <Button style={styles.modalErrorButton} onPress={() => this.errorCloseModal()}>
+            <Text style={styles.modalTextError}>OK</Text>
+          </Button>
+        </Col>
+    </Modal>);
   }
 
   render() {
@@ -146,6 +164,7 @@ class SendCodeContainer extends Component {
           </KeyboardAwareScrollView>
         </Wallpaper>
         {this.renderModalSuccess()}
+        {this.renderModalError()}
       </Container>
     );
   }

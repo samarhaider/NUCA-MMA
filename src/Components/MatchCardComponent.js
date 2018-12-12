@@ -14,6 +14,7 @@ import {
 import moment from 'moment/src/moment';
 import styles from '../styles';
 import { S3_BASE_URL } from "../Constants";
+import commonColor from "../../native-base-theme/variables/commonColor";
 const uri = "https://komarketing.com/images/2014/08/linkedin-default.png";
 // import bgSrc from '../../assets/bg.png';
 
@@ -34,15 +35,20 @@ class MatchCardComponent extends Component {
     return (<Row>
       <Col size={40} style={style.player}  >
         <Thumbnail large source={{uri: profile_picture1}} style={style.thumbnail} />
-        <Text style={{fontWeight:'bold'}}>{data.athlete_one_data.name}</Text>
+        <Text style={{textAlign: 'center', fontWeight:'bold'}}>{data.athlete_one_data.name}</Text>
         <Text note>{data.school_one_data.name}</Text>
       </Col>
       <Col size={20} style={{ flexDirection: 'column', justifyContent: 'center', alignItems: 'center', }} >
+      <Row>
+        <Text style={{color: commonColor.brandPrimary}} >{data.weight_class.name}</Text>
+      </Row>
+      <Row>
         <Text style={styles.vs} >VS</Text>
+      </Row>
       </Col>
       <Col size={40} style={style.player} >
         <Thumbnail large source={{uri: profile_picture2}} style={style.thumbnail} />
-        <Text style={{fontWeight:'bold'}}>{data.athlete_two_data.name}</Text>
+        <Text style={{textAlign: 'center', fontWeight:'bold'}}>{data.athlete_two_data.name}</Text>
         <Text note>{data.school_two_data.name}</Text>
       </Col>
     </Row>);
@@ -73,7 +79,12 @@ class MatchCardComponent extends Component {
     </CardItem>
     <CardItem>
       {this.renderCardBody()}
-    </CardItem>            
+    </CardItem>
+    {/* <CardItem header bordered>
+      <Body>
+        <Text>{data.weight_class.name}</Text>
+      </Body>
+    </CardItem> */}
   </Card>;
   }
 }

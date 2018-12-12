@@ -14,10 +14,12 @@ import {
   Text,
   Form,
   View,
-  Icon,
+  H1,
   Title,
+  Col,
 } from "native-base";
-import { emailChanged, passwordChanged, loginUser } from "../Actions";
+import Modal from 'react-native-modalbox';
+import { emailChanged, passwordChanged, loginUser, authErrorEmpty } from "../Actions";
 import styles from "../styles";
 import { style } from "expo/src/Font";
 import getTheme from "../../native-base-theme/components";
@@ -49,6 +51,25 @@ class LoginContainer extends Component {
   }
   onForgetPasswordButtonPress() {
     this.props.navigation.navigate("sendCode");
+  }
+
+  closeModal = () => {
+    this.props.dispatch(authErrorEmpty());
+  }
+
+  renderModalError () {
+    if (!this.props.error) {
+      return;
+    }
+    return (<Modal style={styles.modalError} isOpen={true} backdropPressToClose={false} onClosed={() => this.closeModal()}>
+        <H1 style={styles.modalErrorHeader}>Alert</H1>
+        <Text style={styles.modalText}>{this.props.error}</Text>
+        <Col style={styles.modelButtonEnd} >
+          <Button style={styles.modalErrorButton} onPress={() => this.closeModal()}>
+            <Text style={styles.modalTextError}>OK</Text>
+          </Button>
+        </Col>
+    </Modal>);
   }
 
   renderLoginButton() {
@@ -126,6 +147,7 @@ class LoginContainer extends Component {
               </Content>
               </KeyboardAwareScrollView>
             </Wallpaper>
+            {this.renderModalError()}
           </Container>;
   }
 }
